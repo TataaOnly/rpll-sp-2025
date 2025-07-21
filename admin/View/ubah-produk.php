@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION['login'])) {
+        header('Location: ../index.php');
+        exit();
+}   
+?>
 <h2 class="text-lg font-medium text-gray-900 mb-4">Ubah Produk</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/jquery.tabledit.js"></script>

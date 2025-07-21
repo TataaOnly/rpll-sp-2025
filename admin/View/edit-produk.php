@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['login'])) {
+        header('Location: ../index.php');
+        exit();
+    }   
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $old = isset($_SESSION['old']) ? $_SESSION['old'] : [];
 unset($_SESSION['errors']);

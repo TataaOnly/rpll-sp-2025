@@ -6,6 +6,14 @@
     <title>Dashboard Sidebar - Laravel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <?php
+    session_start();
+    if (!isset($_SESSION['login'])) {
+        header('Location: ../index.php');
+        exit();
+    }   
+    ?>
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
@@ -46,7 +54,7 @@
 
             <!-- Sign Out Section -->
             <div class="absolute bottom-0 w-64 p-4 border-t border-gray-200 bg-white">
-                <form method="POST" action="logout.php" class="mt-2">
+                <form method="POST" action="../Controller/logout.php" class="mt-2">
                     <button type="submit" 
                             class="w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700 group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors">
                         <i class="fas fa-sign-out-alt text-red-500 group-hover:text-red-600 mr-3 w-5 h-5 flex-shrink-0"></i>
@@ -90,19 +98,5 @@
             </main>
         </div>
     </div>
-
-    <!-- Mobile Sidebar Overlay (for responsive design) -->
-    <div class="fixed inset-0 z-40 lg:hidden hidden" id="sidebar-overlay">
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
-        <!-- Mobile sidebar would go here -->
-    </div>
-
-    <script>
-        // Add JavaScript for mobile menu toggle if needed
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle functionality can be added here
-            console.log('Dashboard loaded');
-        });
-    </script>
 </body>
 </html>
