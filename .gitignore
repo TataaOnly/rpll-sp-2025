@@ -1,0 +1,5 @@
+# datanase setup script
+admin/Model/kontakscript.php
+# Upload directories - ignore contents but keep folder
+uploads/*
+!uploads/.gitkeep
