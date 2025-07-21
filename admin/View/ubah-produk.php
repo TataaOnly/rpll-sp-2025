@@ -1,4 +1,8 @@
 <?php
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
 if (!isset($_SESSION['login'])) {
         header('Location: ../index.php');
         exit();
@@ -41,31 +45,31 @@ if (!isset($_SESSION['login'])) {
                             include_once '../Model/config.php';
                             $sql_query = "SELECT produk_id, nama, stok, harga, status FROM produk";
                             $resultset = mysqli_query($conn, $sql_query) or die("database error:". mysqli_error($conn));
-                            while( $developer = mysqli_fetch_assoc($resultset) ) {
-                                $isChecked = $developer['status'] == 'Aktif' ? 'checked' : '';
-                                $statusText = $developer['status'] == 'Aktif' ? 'Aktif' : 'Tidak Aktif';
-                                $statusClass = $developer['status'] == 'Aktif' ? 'status-active' : 'status-inactive';
+                            while( $produk = mysqli_fetch_assoc($resultset) ) {
+                                $isChecked = $produk['status'] == 'Aktif' ? 'checked' : '';
+                                $statusText = $produk['status'] == 'Aktif' ? 'Aktif' : 'Tidak Aktif';
+                                $statusClass = $produk['status'] == 'Aktif' ? 'status-active' : 'status-inactive';
                             ?>
-                                <tr id="<?php echo $developer['produk_id']; ?>" class="transition-all duration-200">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo $developer['produk_id']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $developer['nama']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $developer['stok']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $developer['harga']; ?></td>
+                                <tr id="<?php echo $produk['produk_id']; ?>" class="transition-all duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo $produk['produk_id']; ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['nama']; ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['stok']; ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['harga']; ?></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" class="status-toggle" data-id="<?php echo $developer['produk_id']; ?>" <?php echo $isChecked; ?>>
+                                            <input type="checkbox" class="status-toggle" data-id="<?php echo $produk['produk_id']; ?>" <?php echo $isChecked; ?>>
                                             <span class="toggle-slider"></span>
                                         </label>
                                         <span class="status-text ml-3 px-2 py-1 rounded-full text-xs font-medium <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        <a href="?page=edit-produk&id=<?php echo $developer['produk_id']; ?>" class="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600 transition-colors inline-block text-center">
+                                        <a href="?page=edit-produk&id=<?php echo $produk['produk_id']; ?>" class="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600 transition-colors inline-block text-center">
                                             Edit
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         <form class="deleteform" method="post">
-                                            <input type="hidden" name="produk_id" value="<?php echo $developer['produk_id']; ?>">
+                                            <input type="hidden" name="produk_id" value="<?php echo $produk['produk_id']; ?>">
                                             <button type="submit" 
                                                     class="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition-colors">
                                                 Delete

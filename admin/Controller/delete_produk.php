@@ -1,5 +1,13 @@
 <?php
 //delete gambar
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
+if (!isset($_SESSION['login'])) {
+    header('Location: ../index.php');
+    exit();
+}   
 include_once "../Model/config.php";
 $sql = "SELECT * FROM gambar WHERE produk_id = ".$_POST['produk_id'].";";
 $result = mysqli_query($conn,$sql);
