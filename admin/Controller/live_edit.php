@@ -7,32 +7,76 @@ if (!isset($_SESSION['login'])) {
         header('Location: ../index.php');
         exit();
     }   
+
+// Set JSON header
+header('Content-Type: application/json');
+
 include_once("../Model/config.php");
 
 $input = filter_input_array(INPUT_POST);
-if ($input['action'] == 'edit') {	
-	$update_field='';
-	if(isset($input['nama'])) {
-		$update_field.= "nama='".$input['nama']."'";
-	} else if(isset($input['stok'])) {
-		$update_field.= "stok='".$input['stok']."'";
-	} else if(isset($input['harga'])) {
-		$update_field.= "harga='".$input['harga']."'";
+
+if ($input && $input['action'] == 'edit') {	
+    $update_field = '';
+    $value = '';
+    
+    // Determine which field to update and sanitize the value
+    if(isset($input['nama'])) {
+        $update_field = "nama";
+        $value = mysqli_real_escape_string($conn, $input['nama']);
+    } else if(isset($input['stok'])) {
+        $update_field = "stok";
+        $value = intval($input['stok']); // Ensure it's an integer
+    } else if(isset($input['harga'])) {
+        $update_field = "harga";
+        $value = floatval($input['harga']); // Ensure it's a number
     }
-	if($update_field && $input['produk_id']) {
-		$sql = "UPDATE produk SET $update_field WHERE produk_id='" . $input['produk_id'] . "'";	
-        mysqli_query($conn, $sql);
-		echo json_encode([
-                'status' => 'success',
-                'message' => 'Data berhasil diupdate'
-            ]);
+    
+    if($update_field && $input['produk_id']) {
+        $produk_id = intval($input['produk_id']); // Ensure it's an integer
+        
+        // Use prepared statement for maximum security
+        $sql = "UPDATE produk SET $update_field = ? WHERE produk_id = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        
+        if ($stmt) {
+            // Bind parameters based on field type
+            if ($update_field == 'nama') {
+                mysqli_stmt_bind_param($stmt, "si", $value, $produk_id);
+            } else {
+                mysqli_stmt_bind_param($stmt, "di", $value, $produk_id); // d for double/float
+            }
+            
+            if (mysqli_stmt_execute($stmt)) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Database error: ' . mysqli_stmt_error($stmt)
+                ]);
+            }
+            
+            mysqli_stmt_close($stmt);
         } else {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Database error: ' . mysqli_error($conn)
+                'message' => 'Failed to prepare statement'
             ]);
         }
-    mysqli_close($conn);
-	
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Missing required fields'
+        ]);
+    }
+} else {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid request'
+    ]);
 }
+
+mysqli_close($conn);
 ?>
