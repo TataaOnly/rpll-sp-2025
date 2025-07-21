@@ -9,8 +9,10 @@ if (!isset($_SESSION['login'])) {
     exit();
 }   
 include_once "../Model/config.php";
-$sql = "SELECT * FROM gambar WHERE produk_id = ".$_POST['produk_id'].";";
-$result = mysqli_query($conn,$sql);
+$stmt = mysqli_prepare($conn, "SELECT * FROM gambar WHERE produk_id = ?");
+mysqli_stmt_bind_param($stmt, "i", $_POST['produk_id']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 if(mysqli_num_rows($result) > 0){
     while($row = mysqli_fetch_assoc($result)){
         $file_path = '../../uploads/'.$row['file'];

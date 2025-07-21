@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = mysqli_real_escape_string($conn, $_POST['nama-produk']);
     $harga = mysqli_real_escape_string($conn, $_POST['harga-produk']);
     $stok = mysqli_real_escape_string($conn, $_POST['stok-produk']);
-    $deskripsi = mysqli_real_escape_string($conn, $_POST['deksripsi']);
+    $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
     
     // Handle deleted images array
     if (!empty($_POST['deleted_images'])) {
