@@ -10,7 +10,14 @@ if (!isset($_SESSION['login'])) {
 include_once '../Model/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $produk_id = mysqli_real_escape_string($conn, $_POST['produk_id']);
+    if(!isset($_POST['produk_id']) || empty($_POST['produk_id'])) {
+        $sql = "INSERT INTO produk (nama, harga, stok, deskripsi) VALUES ('', '', '', '')";
+        if (mysqli_query($conn, $sql)) {
+            $produk_id = mysqli_insert_id($conn);
+        }
+    } else {
+        $produk_id = mysqli_real_escape_string($conn, $_POST['produk_id']);
+    }
     $nama = mysqli_real_escape_string($conn, $_POST['nama-produk']);
     $harga = mysqli_real_escape_string($conn, $_POST['harga-produk']);
     $stok = mysqli_real_escape_string($conn, $_POST['stok-produk']);
