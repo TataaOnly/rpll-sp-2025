@@ -13,30 +13,40 @@ if (!isset($_SESSION['login'])) {
 <script type="text/javascript" src="../dist/jquery.tabledit.js"></script>
 <link rel="stylesheet" href="ubah-produk.css"> 
 <div class="bg-gray-50 p-6">
-<div class="max-w-7xl mx-auto">
+<div class="mx-auto">
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
-                <h2 class="text-2xl font-bold text-white flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                    </svg>
-                    Ubah Produk
-                </h2>
-                <p class="text-blue-100 mt-1">Kelola produk dengan mudah - klik untuk mengedit</p>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                            Ubah Produk
+                        </h2>
+                        <p class="text-blue-100 mt-1">Kelola produk dengan mudah - klik untuk mengedit</p>
+                    </div>
+                    <div>
+                        <a href="?page=edit-produk" class="bg-blue-600 text-white px-6 py-4 text-md font-semibold rounded shadow-lg hover:bg-blue-700 transition-colors rounded-lg">
+                            + Tambah Produk
+                        </a>
+                    </div>
+                </div>
             </div>
+            
             
             <div class="p-6">
                 <div class="overflow-x-auto">
                     <table id="data_table" class="product-table w-full table table-striped">
                         <thead>
                             <tr class="bg-gray-50 border-b-2 border-gray-200">
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID Produk</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">ID Produk</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama Produk</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Stok</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Harga</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Edit</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Delete</th>
+                                <th class="px-6 py-4 text-left text-xs max-w-xs font-semibold text-gray-600 uppercase tracking-wider w-32">Status</th>
+                                <th class="px-6 py-4 text-left text-xs max-w-xs font-semibold text-gray-600 uppercase tracking-wider w-20" >Edit</th>
+                                <th class="px-6 py-4 text-left text-xs max-w-xs font-semibold text-gray-600 uppercase tracking-wider w-20" >Delete</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">

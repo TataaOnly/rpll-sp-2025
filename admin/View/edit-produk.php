@@ -25,6 +25,14 @@ if (isset($_GET['id'])) {
     while ($row = mysqli_fetch_assoc($image_result)) {
         $existing_images[] = $row;
     }
+} else{
+    $produk = [];
+    $existing_images = [];
+    $produk['produk_id'] = '';
+    $produk['nama'] = '';
+    $produk['harga'] = '';
+    $produk['stok'] = '';
+    $produk['deskripsi'] = '';
 }
 
 ?>
@@ -69,6 +77,17 @@ if (isset($_GET['id'])) {
                     </div>
                     <?php if (isset($errors['stok-produk'])): ?>
                             <div class="text-red-500 text-sm/6 mt-1"><?php echo htmlspecialchars($errors['stok-produk']); ?></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="sm:col-span-6">
+                <label for="deskripsi" class="block text-sm/6 font-medium text-gray-900">Deskripsi Produk</label>
+                <div class="mt-2">
+                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                        <textarea name="deskripsi" id="deskripsi" rows="4" class="block min-w-0 grow py-1.5 pr-3 pl-1 border-b text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"><?php echo htmlspecialchars($produk['deskripsi']); ?></textarea>
+                    </div>
+                    <?php if (isset($errors['deskripsi'])): ?>
+                            <div class="text-red-500 text-sm/6 mt-1"><?php echo htmlspecialchars($errors['deskripsi']); ?></div>
                     <?php endif; ?>
                 </div>
             </div>
