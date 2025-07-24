@@ -97,6 +97,7 @@ if (isset($_GET['id'])) {
                     <div class="mt-2">
                         
                         <!-- Combined Images Display Area -->
+                        <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4 <?php echo empty($existing_images) ? 'hidden' : ''; ?>"></div>
                         <!-- Existing images will be shown here -->
                             <?php foreach ($existing_images as $image): ?>
                                 <div class="relative group existing-image" data-image-id="<?php echo $image['gambar_id']; ?>">
