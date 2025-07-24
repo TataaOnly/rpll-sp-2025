@@ -53,7 +53,7 @@ if (!isset($_SESSION['login'])) {
                             <!-- Your PHP loop goes here -->
                              <?php
                             include_once '../Model/config.php';
-                            $sql_query = "SELECT produk_id, nama, stok, harga, status FROM produk";
+                            $sql_query = "SELECT produk_id, nama, stok, harga, status FROM produk WHERE nama NOT LIKE 'custom' ORDER BY produk_id ASC";
                             $resultset = mysqli_query($conn, $sql_query) or die("database error:". mysqli_error($conn));
                             while( $produk = mysqli_fetch_assoc($resultset) ) {
                                 $isChecked = $produk['status'] == 'Aktif' ? 'checked' : '';

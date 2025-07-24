@@ -1,0 +1,209 @@
+<link rel="stylesheet" href="ubah-galeri.css">
+<div class="main-content">
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <?php
+                    include_once '../Model/config.php';
+                    $query = "SELECT * FROM produk WHERE nama LIKE 'custom' LIMIT 1";
+                    $result = mysqli_query($conn, $query);
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $produk_id = $row['produk_id'];
+                    } else {
+                        $produk_id = 0; // Default value if no product found
+                    }
+                ?>
+                <!-- Page Header -->
+                <form method="POST" action="../Controller/tambah_galeri.php" enctype="multipart/form-data">
+                    <div class="page-header">
+                        <h1 class="page-title">Ubah Galeri</h1>
+                        <div class="header-actions">
+                            <button type="submit" class="btn btn-primary">+ Add Images</button>
+                        </div>
+                    </div>
+                    
+                        <input type="hidden" name="produk_id" value="<?php echo htmlspecialchars($produk_id); ?>">
+                    <!-- Upload area -->
+                    <div id="upload-area" class="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 hover:border-gray-400 transition-colors">
+                        <div class="text-center">
+                            <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="mt-4 flex text-sm/6 text-gray-600">
+                                <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
+                                    <span>Add more images</span>
+                                    <input id="file-upload" name="file-upload[]" type="file" class="sr-only" multiple accept="image/*" />
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB each</p>
+                        </div>
+                    </div>
+                    <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4"></div>
+                </form>
+
+                <?php if (!empty($errors)): ?>
+                <div class="text-red-500 text-sm/6">
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <li><?php echo htmlspecialchars($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+                <br/>
+                <hr/>
+                <br />
+                <h2 class="text-lg font-semibold mb-4">Existing Images</h2>
+                <!-- Gallery Grid -->
+                <div class="gallery-grid">
+                    <?php
+                    $gambar = [];
+                    $query = "SELECT * FROM gambar WHERE produk_id = '$produk_id' ORDER BY gambar_id DESC";
+                    $result = mysqli_query($conn, $query);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $gambar[] = $row;
+                        }
+                    }
+                    ?>
+                    <!-- Image Card 1 -->
+                    <?php foreach ($gambar as $image): ?>
+                    <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
+                        <div class="image-preview">
+                            <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
+                            <div class="image-overlay">
+                                <checkbox class="image-checkbox absolute top-2 left-2">
+                                    <input type="checkbox" id="image1" name="image1" value="1">
+                                    <label for="image1"></label>
+                                </checkbox>
+                                <button type="button" 
+                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center  transition-opacity hover:bg-red-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="image-filename"><?php echo htmlspecialchars($image['file']); ?></div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <button class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">Hapus Gambar Dicentang</button>
+
+            </main>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-upload');
+        const allImages = document.getElementById('all-images');
+
+        let selectedFiles = [];
+
+        const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        const maxFileSize = 10 * 1024 * 1024; // 10MB
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('border-indigo-600', 'bg-indigo-50');
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-indigo-600', 'bg-indigo-50');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-indigo-600', 'bg-indigo-50');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        function validateFile(file){
+            if(!validImageTypes.includes(file.type)){
+                alert(`${file.name} is not a valid image type. Please upload JPEG, PNG, GIF, or WebP files.`);
+                return false;
+            }
+
+            if(file.size > maxFileSize){
+                alert(`${file.name} is too large. Maximum size is 10MB.`);
+                return false;
+            }
+
+            return true;
+        }
+
+        function displayImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'relative group new-image';
+
+                imageDiv.innerHTML = `
+                    <div class="image-card">
+                        <div class="image-preview">
+                            <img src="${e.target.result}" alt="Sample Image">
+                            <div class="image-overlay">
+                                <button type="button" 
+                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center  transition-opacity hover:bg-red-600" onclick="removeNewImage(this, '${file.name}')">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="image-filename">${file.name}</div>
+                        </div>
+                    </div>
+                    
+                `;
+                
+                allImages.appendChild(imageDiv);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateFileInput() {
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            fileInput.files = dt.files;
+        }
+
+        function handleFiles(files){
+            const validFiles = [];
+            files.forEach(file => {
+                if (validateFile(file)) {
+                    validFiles.push(file);
+                }
+            });
+            
+            validFiles.forEach(file => {
+                selectedFiles.push(file);
+                displayImage(file);
+            });
+            
+            if (validFiles.length > 0) {
+                updateFileInput();
+            }
+
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        window.removeNewImage = function(button, fileName) {
+            selectedFiles = selectedFiles.filter(file => file.name !== fileName);
+            button.parentElement.parentElement.parentElement.parentElement.remove();
+            updateFileInput();
+        };
+
+
+    </script>
