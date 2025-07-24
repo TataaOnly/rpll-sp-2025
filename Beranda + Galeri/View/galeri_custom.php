@@ -6,7 +6,7 @@
   <title>PlastikHB</title>
   <link rel="stylesheet" href="css/beranda.css">
   <link rel="stylesheet" href="css/galeri_custom.css">
-  <script src="js/galeri_custom.js"></script>
+  <script src="js/galeri_custom.js" defer></script>
 </head>
 <body>
   <header>
@@ -46,7 +46,7 @@
                   echo "
                     <div class='product $hiddenClass'>
                       <img src='../img/{$row['file']}' alt='Gambar Produk Custom'>
-                      <p>{$row['nama']}</p>
+                      <p></p>
                     </div>
                   ";
                   $index++;
@@ -58,7 +58,7 @@
             $conn->close();
           ?>
         </div>
-        <button><a href="#"><i>Selengkapnya</i></a></button>
+        <button id="loadMoreBtn"><i>Selengkapnya</i></button>
       </center>
     </div>
   </main>
