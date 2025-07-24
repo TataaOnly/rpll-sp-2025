@@ -2,6 +2,8 @@
 <html lang="en" class="h-full bg-gray-200">
 <head>
 <script src="https://cdn.tailwindcss.com"></script>
+    <title>PlastikHB Admin Login</title>
+    <link rel="icon" href="../../images/icon.png" type="image/png">
 <?php
 session_start();
 if(isset($_SESSION['login'])) {
@@ -13,8 +15,9 @@ if(isset($_SESSION['login'])) {
 <body class="h-full">
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img class="mx-auto h-10 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+    <img class="mx-auto h-auto w-auto" src="../images/logo.png" alt="PlastikHB" />
     <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Admin</h2>
+
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
