@@ -1,101 +1,118 @@
+<?php
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
+if (!isset($_SESSION['login'])) {
+        header('Location: ../index.php');
+        exit();
+}   
+?>
 <link rel="stylesheet" href="ubah-galeri.css">
 <div class="main-content">
-
-            <!-- Content Area -->
-            <main class="content-area">
-                <?php
-                    include_once '../Model/config.php';
-                    $query = "SELECT * FROM produk WHERE nama LIKE 'custom' LIMIT 1";
-                    $result = mysqli_query($conn, $query);
-                    if ($result && mysqli_num_rows($result) > 0) {
-                        $row = mysqli_fetch_assoc($result);
-                        $produk_id = $row['produk_id'];
-                    } else {
-                        $produk_id = 0; // Default value if no product found
-                    }
-                ?>
-                <!-- Page Header -->
-                <form method="POST" action="../Controller/tambah_galeri.php" enctype="multipart/form-data">
-                    <div class="page-header">
-                        <h1 class="page-title">Ubah Galeri</h1>
-                        <div class="header-actions">
-                            <button type="submit" class="btn btn-primary">+ Add Images</button>
-                        </div>
-                    </div>
-                    
-                        <input type="hidden" name="produk_id" value="<?php echo htmlspecialchars($produk_id); ?>">
-                    <!-- Upload area -->
-                    <div id="upload-area" class="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 hover:border-gray-400 transition-colors">
-                        <div class="text-center">
-                            <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
-                                <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
-                            </svg>
-                            <div class="mt-4 flex text-sm/6 text-gray-600">
-                                <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
-                                    <span>Add more images</span>
-                                    <input id="file-upload" name="file-upload[]" type="file" class="sr-only" multiple accept="image/*" />
-                                </label>
-                                <p class="pl-1">or drag and drop</p>
-                            </div>
-                            <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB each</p>
-                        </div>
-                    </div>
-                    <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4"></div>
-                </form>
-
-                <?php if (!empty($errors)): ?>
-                <div class="text-red-500 text-sm/6">
-                    <ul>
-                        <?php foreach ($errors as $error): ?>
-                            <li><?php echo htmlspecialchars($error); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+    <!-- Content Area -->
+    <main class="content-area">
+        <?php
+            include_once '../Model/config.php';
+            $query = "SELECT * FROM produk WHERE nama LIKE 'custom' ORDER BY produk_id ASC LIMIT 1";
+            $result = mysqli_query($conn, $query);
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $produk_id = $row['produk_id'];
+            } else {
+                $produk_id = 0; // Default value if no product found
+            }
+        ?>
+        <!-- Page Header -->
+        <form method="POST" action="../Controller/tambah_galeri.php" enctype="multipart/form-data">
+            <div class="page-header">
+                <h1 class="page-title">Ubah Galeri</h1>
+                <div class="header-actions">
+                    <button type="submit" class="btn btn-primary">+ Add Images</button>
                 </div>
-                <?php endif; ?>
-                <br/>
-                <hr/>
-                <br />
-                <h2 class="text-lg font-semibold mb-4">Existing Images</h2>
-                <!-- Gallery Grid -->
-                <div class="gallery-grid">
-                    <?php
-                    $gambar = [];
-                    $query = "SELECT * FROM gambar WHERE produk_id = '$produk_id' ORDER BY gambar_id DESC";
-                    $result = mysqli_query($conn, $query);
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $gambar[] = $row;
-                        }
-                    }
-                    ?>
-                    <!-- Image Card 1 -->
-                    <?php foreach ($gambar as $image): ?>
-                    <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
-                        <div class="image-preview">
-                            <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
-                            <div class="image-overlay">
-                                <checkbox class="image-checkbox absolute top-2 left-2">
-                                    <input type="checkbox" id="image1" name="image1" value="1">
-                                    <label for="image1"></label>
-                                </checkbox>
-                                <button type="button" 
-                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center  transition-opacity hover:bg-red-600">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <div class="image-filename"><?php echo htmlspecialchars($image['file']); ?></div>
-                        </div>
+            </div>
+            
+                <input type="hidden" name="produk_id" value="<?php echo htmlspecialchars($produk_id); ?>">
+            <!-- Upload area -->
+            <div id="upload-area" class="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 hover:border-gray-400 transition-colors">
+                <div class="text-center">
+                    <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                    </svg>
+                    <div class="mt-4 flex text-sm/6 text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
+                            <span>Add more images</span>
+                            <input id="file-upload" name="file-upload[]" type="file" class="sr-only" multiple accept="image/*" />
+                        </label>
+                        <p class="pl-1">or drag and drop</p>
                     </div>
-                    <?php endforeach; ?>
+                    <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB each</p>
                 </div>
-                <button class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">Hapus Gambar Dicentang</button>
+            </div>
+            <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4"></div>
+        </form>
 
-            </main>
-    </div>
+        <?php if (!empty($errors)): ?>
+        <div class="text-red-500 text-sm/6">
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+        <br/>
+        <hr/>
+        <br />
+        <h2 class="text-lg font-semibold mb-4">Existing Images</h2>
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <?php
+            $gambar = [];
+            $query = "SELECT * FROM gambar WHERE produk_id = '$produk_id' ORDER BY gambar_id DESC";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $gambar[] = $row;
+                }
+            }
+            ?>
+            <!-- Image Card 1 -->
+            <?php foreach ($gambar as $image): ?>
+            <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
+                <div class="image-preview">
+                    <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
+                    <div class="image-overlay">
+                        <div class="image-checkbox absolute top-2 left-2">
+                            <input type="checkbox" 
+                                id="image_<?php echo $image['gambar_id']; ?>" 
+                                name="selected_images[]" 
+                                value="<?php echo $image['gambar_id']; ?>"
+                                class="image-select-checkbox">
+                        </div>
+                        <button type="button" 
+                                    onclick="deleteImage(<?php echo $image['gambar_id']; ?>)"
+                                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center transition-opacity hover:bg-red-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="image-filename"><?php echo htmlspecialchars($image['file']); ?></div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <button type="button" 
+                onclick="deleteSelectedImages()" 
+                class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">
+            Hapus Gambar Dicentang
+        </button>
+
+    </main>
+</div>
 
     <script>
         const uploadArea = document.getElementById('upload-area');
@@ -204,6 +221,67 @@
             button.parentElement.parentElement.parentElement.parentElement.remove();
             updateFileInput();
         };
+
+        //delete banyak gambar
+        function deleteSelectedImages() {
+            const selectedCheckboxes = document.querySelectorAll('.image-select-checkbox:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                alert('Please select at least one image to delete.');
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete ${selectedCheckboxes.length} selected image(s)?`)) {
+                return;
+            }
+            
+            const imageIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+            deleteImages(imageIds, selectedCheckboxes);
+        }
+
+        //delete 1 gambar
+        function deleteImage(imageId) {
+            if (!confirm('Are you sure you want to delete this image?')) {
+                return;
+            }
+            
+            const imageElement = document.querySelector(`[data-image-id="${imageId}"]`);
+            deleteImages([imageId], [imageElement]);
+        }
+
+        // Delete gambar
+        function deleteImages(imageIds, elementsToRemove) {
+            const formData = new FormData();
+            formData.append('produk_id', '<?php echo $produk_id; ?>');
+            
+            // Send as array for both single and multiple
+            imageIds.forEach(id => formData.append('image_ids[]', id));
+            
+            fetch('../Controller/delete_galeri.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    // Remove elements from DOM
+                    elementsToRemove.forEach(element => {
+                        if (element.closest) {
+                            element.closest('.image-card').remove();
+                        } else {
+                            element.remove();
+                        }
+                    });
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete images');
+            });
+        }
 
 
     </script>

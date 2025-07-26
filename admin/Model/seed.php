@@ -38,6 +38,9 @@ if ($stmt) {
 }
 
 $sql = "INSERT INTO produk (nama, deskripsi, stok, harga, status) VALUES
+        ('custom','', 0, 0, 'Non-Aktif'),
+        ('Plastik Kresek Hitam Kecil', 'Plastik kresek warna hitam ukuran kecil, ideal untuk belanja atau pembungkus barang.', 500, 1000, 'Aktif'),
+        ('Plastik Kresek Putih Sedang', 'Plastik kresek warna putih ukuran sedang, cocok untuk berbagai keperluan.', 300, 2000, 'Aktif'),
         ('Plastik Kresek Hitam Besar', 'Plastik kresek warna hitam ukuran besar, cocok untuk belanja atau pembungkus barang.', 250, 1500, 'Aktif'),
         ('Plastik PP Bening 1kg', 'Plastik bening Polypropylene (PP), ideal untuk kemasan makanan kering.', 100, 12000, 'Aktif'),
         ('Roll Plastik HDPE 50cm', 'Roll plastik HDPE lebar 50cm, kuat dan fleksibel, cocok untuk industri kemasan.', 50, 55000, 'Aktif'),

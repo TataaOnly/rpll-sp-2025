@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Sidebar - Laravel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>PlastikHB Admin Dashboard</title>
+    <link rel="icon" href="../../images/icon.png" type="image/png">
 
     <?php
     if(!isset($_SESSION)) 
@@ -25,10 +26,10 @@
             <!-- Logo/Brand -->
             <div class="flex items-center justify-center h-16 px-4 border-b border-gray-200">
                 <div class="flex items-center">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">L</span>
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center">
+                        <image src="../../images/icon.png" alt="Logo" class="w-12 h-12">
                     </div>
-                    <span class="ml-2 text-xl font-semibold text-gray-800">PlastikHB</span>
+                    <span class="text-xl font-semibold text-gray-800">PlastikHB</span>
                 </div>
             </div>
 
@@ -77,7 +78,7 @@
                         <button class="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                             <i class="fas fa-bars"></i>
                         </button>
-                        <h1 class="ml-3 text-xl font-semibold text-gray-900">Dashboard</h1>
+                        <h1 class="ml-3 text-xl font-semibold text-gray-900">Admin Dashboard</h1>
                     </div>
                 </div>
             </header>
