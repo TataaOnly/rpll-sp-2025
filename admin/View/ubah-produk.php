@@ -1,12 +1,6 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-}   
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle();
 ?>
 <h2 class="text-lg font-medium text-gray-900 mb-4">Ubah Produk</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

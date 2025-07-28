@@ -1,13 +1,7 @@
 <?php
 //delete gambar
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-    header('Location: ../index.php');
-    exit();
-}   
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle(); 
 include_once "../Model/config.php";
 $stmt = mysqli_prepare($conn, "SELECT * FROM gambar WHERE produk_id = ?");
 mysqli_stmt_bind_param($stmt, "i", $_POST['produk_id']);

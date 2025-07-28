@@ -1,12 +1,6 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-    }   
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $old = isset($_SESSION['old']) ? $_SESSION['old'] : [];
 unset($_SESSION['errors']);
