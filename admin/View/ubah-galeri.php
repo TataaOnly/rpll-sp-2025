@@ -1,21 +1,50 @@
 <?php
 require_once '../Middleware/AuthMiddleware.php';
 AuthMiddleware::handle();
+
+require_once '../Service/ProdukService.php';
+require_once '../Service/GambarService.php';
+require_once '../Helpers/ErrorHandler.php';
 ?>
 <link rel="stylesheet" href="ubah-galeri.css">
+
+<!-- error and success message display -->
+<?php 
+ErrorHandler::displayErrors();
+ErrorHandler::displaySuccess();
+?>
+
 <div class="main-content">
     <!-- Content Area -->
     <main class="content-area">
         <?php
-            include_once '../Model/config.php';
-            $query = "SELECT * FROM produk WHERE nama LIKE 'custom' ORDER BY produk_id ASC LIMIT 1";
-            $result = mysqli_query($conn, $query);
-            if ($result && mysqli_num_rows($result) > 0) {
-                $row = mysqli_fetch_assoc($result);
-                $produk_id = $row['produk_id'];
-            } else {
-                $produk_id = 0; // Default value if no product found
+        // Use service to get gallery product
+        $produkService = new ProdukService();
+        $gambarService = new GambarService();
+        
+        // Find gallery product (assuming it's the one with 'custom' name)
+        $products = $produkService->getAllProducts();
+        $produk_id = 0;
+        
+        if ($products) {
+            foreach ($products as $product) {
+                if (stripos($product['nama'], 'custom') !== false) {
+                    $produk_id = $product['produk_id'];
+                    break;
+                }
             }
+        }
+        
+        // If no custom product found, create one
+        if ($produk_id == 0) {
+            $initial_data = [
+                'nama' => 'custom',
+                'harga' => 0,
+                'stok' => 0,
+                'deskripsi' => 'Gallery images'
+            ];
+            $produk_id = $produkService->addProduct($initial_data);
+        }
         ?>
         <!-- Page Header -->
         <form method="POST" action="../Controller/tambah_galeri.php" enctype="multipart/form-data">
@@ -46,30 +75,18 @@ AuthMiddleware::handle();
             <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4"></div>
         </form>
 
-        <?php if (!empty($errors)): ?>
-        <div class="text-red-500 text-sm/6">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo htmlspecialchars($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <?php endif; ?>
         <br/>
         <hr/>
         <br />
         <h2 class="text-lg font-semibold mb-4">Existing Images</h2>
         <!-- Gallery Grid -->
         <div class="gallery-grid">
-            <?php
-            $gambar = [];
-            $query = "SELECT * FROM gambar WHERE produk_id = '$produk_id' ORDER BY gambar_id DESC";
-            $result = mysqli_query($conn, $query);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $gambar[] = $row;
-                }
-            }
+           <?php
+            // Use service to get images
+            $images = $gambarService->getAllImagesByProductId($produk_id);
+            
+            if ($images && !empty($images)) {
+                foreach ($images as $image) {
             ?>
             <!-- Image Card 1 -->
             <?php foreach ($gambar as $image): ?>
@@ -96,9 +113,12 @@ AuthMiddleware::handle();
                 <div class="card-content">
                     <div class="image-filename"><?php echo htmlspecialchars($image['file']); ?></div>
                 </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
+            <?php 
+                }
+            } else {
+                echo '<p class="text-gray-500">No images found. Upload some images to get started.</p>';
+            }
+            ?>
         <button type="button" 
                 onclick="deleteSelectedImages()" 
                 class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">

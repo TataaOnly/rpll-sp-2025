@@ -2,7 +2,7 @@
 require_once '../Middleware/AuthMiddleware.php';
 AuthMiddleware::handle(); 
 
-// Only need service classes now
+require_once '../Helpers/ErrorHandler.php';
 require_once '../Service/ProdukService.php';
 require_once '../Service/GambarService.php';
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $produk_id = $produkService->addProduct($initial_data);
         
         if (!$produk_id) {
-            $_SESSION['errors'][] = 'Failed to create new product';
+            ErrorHandler::addError('Failed to create new product');
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Verify product exists using service
         if (!$produkService->findProductById($produk_id)) {
-            $_SESSION['errors'][] = 'Product not found';
+            ErrorHandler::addError('Product not found');
             header('Location: ../View/layout.php?page=ubah-produk');
             exit;
         }
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Use service validation
     $validation = $produkService->validateProductData($update_data);
     if ($validation !== true) {
-        $_SESSION['errors'] = $validation;
+        ErrorHandler::addErrors($validation);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($deleted_ids)) {
             $deleted_files = $gambarService->deleteImages($deleted_ids);
             
-            // Handle file cleanup (service returns filenames)
             if ($deleted_files) {
                 foreach ($deleted_files as $filename) {
                     $file_path = '../../uploads/' . $filename;
@@ -79,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['file-upload']) && !empty($_FILES['file-upload']['name'][0])) {
         $upload_dir = '../../uploads/';
         
-        // Create upload directory if it doesn't exist
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
@@ -93,32 +91,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'tmp_name' => $_FILES['file-upload']['tmp_name'][$i]
                 ];
                 
-                // Use service validation
                 $validation = $gambarService->validateImageFile($file);
                 if ($validation !== true) {
-                    $_SESSION['errors'] = array_merge($_SESSION['errors'] ?? [], $validation);
+                    ErrorHandler::addErrors($validation);
                     continue;
                 }
                 
-                // Generate unique filename
                 $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $filename = time() . '_' . uniqid() . '.' . $file_extension;
                 $upload_path = $upload_dir . $filename;
                 
                 if (move_uploaded_file($file['tmp_name'], $upload_path)) {
-                    // Use service to save image record
                     $image_data = [
                         'file' => $filename,
                         'produk_id' => $produk_id
                     ];
                     
                     if (!$gambarService->addImage($image_data)) {
-                        $_SESSION['errors'][] = "Failed to save image record: " . $file['name'];
-                        // Delete uploaded file if database save fails
+                        ErrorHandler::addError("Failed to save image record: " . $file['name']);
                         unlink($upload_path);
                     }
                 } else {
-                    $_SESSION['errors'][] = "Failed to upload file: " . $file['name'];
+                    ErrorHandler::addError("Failed to upload file: " . $file['name']);
                 }
             }
         }
@@ -126,11 +120,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Update product using service
     if ($produkService->updateProduct($produk_id, $update_data)) {
-        $_SESSION['success'] = 'Product updated successfully';
+        ErrorHandler::setSuccess('Product updated successfully');
         header('Location: ../View/layout.php?page=ubah-produk');
         exit;
     } else {
-        $_SESSION['errors'][] = 'Failed to update product details';
+        ErrorHandler::addError('Failed to update product details');
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }

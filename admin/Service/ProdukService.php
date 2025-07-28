@@ -47,6 +47,15 @@ class ProdukService {
         
         return empty($errors) ? true : $errors;
     }
+
+    public function updateProductStatus($id, $status) {
+        if (!in_array($status, ['Aktif', 'Non-Aktif'])) {
+            return false;
+        }
+        
+        $data = ['status' => $status];
+        return $this->produkModel->update($id, $data);
+    }
 }
 
 ?>

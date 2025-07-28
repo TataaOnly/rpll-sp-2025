@@ -46,7 +46,7 @@ class GambarService {
         return $result ? $files : false; // Return filenames for controller cleanup
     }
 
-    public function deleteImagesByProdukId($productId) {
+    public function deleteImagesByProductId($productId) {
         // Get files before deletion for controller cleanup
         $images = $this->gambarModel->findByProdukId($productId);
         $files = array_column($images, 'file');

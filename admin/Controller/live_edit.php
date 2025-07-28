@@ -25,6 +25,16 @@ if ($input && $input['action'] == 'edit') {
     
     if(!empty($update_data) && $produk_id > 0) {
 
+        $validation = $produkService->validateProductData($update_data);
+        if ($validation !== true) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => implode(', ', $validation)
+            ]);
+            exit;
+        }
+        
+
         if($produkService->updateProduct($produk_id, $update_data)) {
             echo json_encode([
                 'status' => 'success',
