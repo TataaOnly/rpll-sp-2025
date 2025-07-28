@@ -2,60 +2,38 @@
 require_once '../Middleware/AuthMiddleware.php';
 AuthMiddleware::handle();
 // Set JSON header
+require_once '../Service/ProdukService.php';
 header('Content-Type: application/json');
 
-include_once("../Model/config.php");
 
 $input = filter_input_array(INPUT_POST);
 
 if ($input && $input['action'] == 'edit') {	
-    $update_field = '';
-    $value = '';
+    $produkService = new ProdukService();
+
+    $produk_id = intval($input['produk_id'] ?? 0);
+    $update_data = [];
     
     // Determine which field to update and sanitize the value
     if(isset($input['nama'])) {
-        $update_field = "nama";
-        $value = mysqli_real_escape_string($conn, $input['nama']);
+        $update_data['nama'] = trim($input['nama']);
     } else if(isset($input['stok'])) {
-        $update_field = "stok";
-        $value = intval($input['stok']); // Ensure it's an integer
+        $update_data['stok'] = intval($input['stok']);
     } else if(isset($input['harga'])) {
-        $update_field = "harga";
-        $value = floatval($input['harga']); // Ensure it's a number
-    }
+        $update_data['harga'] = floatval($input['harga']);
+    } 
     
-    if($update_field && $input['produk_id']) {
-        $produk_id = intval($input['produk_id']); // Ensure it's an integer
-        
-        // Use prepared statement for maximum security
-        $sql = "UPDATE produk SET $update_field = ? WHERE produk_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        
-        if ($stmt) {
-            // Bind parameters based on field type
-            if ($update_field == 'nama') {
-                mysqli_stmt_bind_param($stmt, "si", $value, $produk_id);
-            } else {
-                mysqli_stmt_bind_param($stmt, "di", $value, $produk_id); // d for double/float
-            }
-            
-            if (mysqli_stmt_execute($stmt)) {
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Data berhasil diupdate'
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Database error: ' . mysqli_stmt_error($stmt)
-                ]);
-            }
-            
-            mysqli_stmt_close($stmt);
+    if(!empty($update_data) && $produk_id > 0) {
+
+        if($produkService->updateProduct($produk_id, $update_data)) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Product updated successfully'
+            ]);
         } else {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Failed to prepare statement'
+                'message' => 'Failed to update product'
             ]);
         }
     } else {
@@ -70,6 +48,4 @@ if ($input && $input['action'] == 'edit') {
         'message' => 'Invalid request'
     ]);
 }
-
-mysqli_close($conn);
 ?>

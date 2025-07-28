@@ -150,7 +150,7 @@ class Gambar {
         foreach ($data as $key => $value) {
             if (in_array($key, $this->columns)) {
                 $fields[] = "{$key} = ?";
-                $if ($key === 'produk_id' && is_numeric($value)) {
+                if ($key === 'produk_id' && is_numeric($value)) {
                     $types .= 'i';
                     $values[] = (int)$value;
                 } else {
