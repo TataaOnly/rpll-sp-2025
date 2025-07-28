@@ -137,7 +137,6 @@ class Produk {
 
         $stmt = $this->conn->prepare("INSERT INTO {$this->table} ({$fieldsQuery}) VALUES ({$placeholdersQuery})");
         
-        // Fix: Add error handling
         if (!$stmt) {
             return false;
         }
