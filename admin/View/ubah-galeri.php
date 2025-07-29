@@ -89,7 +89,7 @@ ErrorHandler::displaySuccess();
                 foreach ($images as $image) {
             ?>
             <!-- Image Card 1 -->
-            <?php foreach ($gambar as $image): ?>
+            <?php foreach ($images as $image): ?>
             <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
                 <div class="image-preview">
                     <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
