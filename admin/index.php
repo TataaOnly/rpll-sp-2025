@@ -15,13 +15,6 @@ if(isset($_SESSION['login'])) {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-200">
-<head>
-<script src="https://cdn.tailwindcss.com"></script>
-    <title>PlastikHB Admin Login</title>
-    <link rel="icon" href="../images/icon.png" type="image/png">
-</head>
 <body class="h-full">
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
