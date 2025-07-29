@@ -1,17 +1,21 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-}   
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle();
+
+require_once '../Helpers/ErrorHandler.php';
+require_once '../Service/ProdukService.php';
 ?>
 <h2 class="text-lg font-medium text-gray-900 mb-4">Ubah Produk</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/jquery.tabledit.js"></script>
 <link rel="stylesheet" href="ubah-produk.css"> 
+
+<!-- error and success message display -->
+<?php 
+ErrorHandler::displayErrors();
+ErrorHandler::displaySuccess();
+?>
+
 <div class="bg-gray-50 p-6">
 <div class="mx-auto">
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -52,19 +56,23 @@ if (!isset($_SESSION['login'])) {
                         <tbody class="bg-white divide-y divide-gray-200">
                             <!-- Your PHP loop goes here -->
                              <?php
-                            include_once '../Model/config.php';
-                            $sql_query = "SELECT produk_id, nama, stok, harga, status FROM produk WHERE nama NOT LIKE 'custom' ORDER BY produk_id ASC";
-                            $resultset = mysqli_query($conn, $sql_query) or die("database error:". mysqli_error($conn));
-                            while( $produk = mysqli_fetch_assoc($resultset) ) {
-                                $isChecked = $produk['status'] == 'Aktif' ? 'checked' : '';
-                                $statusText = $produk['status'] == 'Aktif' ? 'Aktif' : 'Tidak Aktif';
-                                $statusClass = $produk['status'] == 'Aktif' ? 'status-active' : 'status-inactive';
+                            $produkService = new ProdukService();
+                            $products = $produkService->getAllProducts();
+                            
+                            if ($products && !empty($products)) {
+                                foreach($products as $produk) {
+                                    if($produk['nama'] === 'custom'){
+                                        continue; // Skip custom products
+                                    }
+                                    $isChecked = $produk['status'] == 'Aktif' ? 'checked' : '';
+                                    $statusText = $produk['status'] == 'Aktif' ? 'Aktif' : 'Non-Aktif';
+                                    $statusClass = $produk['status'] == 'Aktif' ? 'status-active' : 'status-inactive';
                             ?>
                                 <tr id="<?php echo $produk['produk_id']; ?>" class="transition-all duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo $produk['produk_id']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['nama']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['stok']; ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $produk['harga']; ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($produk['nama']); ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($produk['stok']); ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($produk['harga']); ?></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         <label class="toggle-switch">
                                             <input type="checkbox" class="status-toggle" data-id="<?php echo $produk['produk_id']; ?>" <?php echo $isChecked; ?>>
@@ -88,7 +96,10 @@ if (!isset($_SESSION['login'])) {
                                     </td>
                                 </tr>
                             <?php }
-                            mysqli_close($conn);
+                            } else {
+                                // UPDATE: Added error message when no products found
+                                echo '<tr><td colspan="7" class="text-center py-4 text-gray-500">No products found</td></tr>';
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -105,14 +116,10 @@ if (!isset($_SESSION['login'])) {
     </div>
 
     <!-- Toast notification -->
-    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-        <div class="flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span id="toast-message">Data berhasil disimpan!</span>
-        </div>
+    <div id="toast" class="fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-medium shadow-lg transform transition-transform duration-300 translate-x-full z-50">
+        <span id="toast-message"></span>
     </div>
+
 
     <script>
         // Initialize the table with your original Tabledit settings
@@ -168,33 +175,35 @@ if (!isset($_SESSION['login'])) {
                 // Add loading effect
                 $row.addClass('loading');
                 
-                // Update status text and styling
+                // Update status text and styling immediately for better UX
                 if (isActive) {
                     $statusText.text('Aktif').removeClass('status-inactive').addClass('status-active');
                 } else {
-                    $statusText.text('Tidak Aktif').removeClass('status-active').addClass('status-inactive');
+                    $statusText.text('Non-Aktif').removeClass('status-active').addClass('status-inactive');
                 }
                 
                 // AJAX call to update status
                 $.post('../Controller/update_status.php', {
                     produk_id: productId,
                     status: isActive ? 'Aktif' : 'Non-Aktif'
-                }, function(response) {
+                })
+                .done(function(response) {
                     $row.removeClass('loading');
-                    showToast('Status produk berhasil diubah!', 'success');
-                }).fail(function() {
+                    if (response.success) {
+                        showToast('Status produk berhasil diubah!', 'success');
+                    } else {
+                        showToast('Error: ' + response.message, 'error');
+                        // Revert changes
+                        revertStatusToggle($toggle, $statusText, isActive);
+                    }
+                })
+                .fail(function() {
                     $row.removeClass('loading');
                     showToast('Terjadi kesalahan saat mengubah status!', 'error');
-                    // Revert toggle state
-                    $toggle.prop('checked', !isActive);
-                    if (!isActive) {
-                        $statusText.text('Aktif').removeClass('status-inactive').addClass('status-active');
-                    } else {
-                        $statusText.text('Tidak Aktif').removeClass('status-active').addClass('status-inactive');
-                    }
+                    // Revert changes
+                    revertStatusToggle($toggle, $statusText, isActive);
                 });
             });
-        });
         
         // Toast notification function
         function showToast(message, type = 'success') {
@@ -216,22 +225,32 @@ if (!isset($_SESSION['login'])) {
             }, 3000);
         }
 
-        $(document).ready(function () {
-            $(document).on('submit', '.deleteform', function (e) {
-                e.preventDefault();
-                if (confirm('Are you sure you want to delete this post?')) {
-                    var produk_id = $(this).find('input[name="produk_id"]').val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "../Controller/delete_produk.php", // URL to your delete script
-                        data: $(this).serialize(),
-                        success: function (response) {
-                            // Handle success response
-                            showToast('Product deleted successfully', 'success');
-                            $('tr#' + produk_id).remove(); // Remove the row from the table
-                        },
-                    });
-                }
-            });
+        $(document).on('submit', '.deleteform', function (e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete this product?')) {
+                var produk_id = $(this).find('input[name="produk_id"]').val();
+                $.ajax({
+                    type: 'POST',
+                    url: "../Controller/delete_produk.php",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        showToast('Product deleted successfully', 'success');
+                        $('tr#' + produk_id).remove();
+                    },
+                    error: function() {
+                        showToast('Failed to delete product', 'error');
+                    }
+                });
+            }
         });
+
+        // helper function to revert status toggle
+        function revertStatusToggle($toggle, $statusText, isActive) {
+            $toggle.prop('checked', !isActive);
+            if (!isActive) {
+                $statusText.text('Aktif').removeClass('status-inactive').addClass('status-active');
+            } else {
+                $statusText.text('Non-Aktif').removeClass('status-active').addClass('status-inactive');
+            }
+        }
     </script>

@@ -9,14 +9,8 @@
     <link rel="icon" href="../../images/icon.png" type="image/png">
 
     <?php
-    if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    } 
-    if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-    }   
+    require_once '../Middleware/AuthMiddleware.php';
+    AuthMiddleware::handle();
     ?>
 </head>
 <body class="bg-gray-100">
