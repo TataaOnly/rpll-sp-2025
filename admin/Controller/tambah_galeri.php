@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Generate unique filename
                 $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-                $filename = time() . '_' . uniqid() . '.' . $file_extension;
+                $filename = $file['name'] . '_' . uniqid() . '.' . $file_extension;
                 $upload_path = $upload_dir . $filename;
 
                 // Move uploaded file

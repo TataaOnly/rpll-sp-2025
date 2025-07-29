@@ -12,14 +12,14 @@ class Database {
         $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
 
         if ($this->conn->connect_error) {
-            die("MySQLi Connection failed: " . $this->conn->connect_error);
+            error_log("Database connection failed: " . $this->conn->connect_error);
+            die("System temporarily unavailable. Please try again later.");
         }
 
-        // Optional: set charset
         $this->conn->set_charset('utf8mb4');
     }
 
-    public static function getInstance() {
+        public static function getInstance() {
         if (!self::$instance) self::$instance = new Database();
         return self::$instance;
     }

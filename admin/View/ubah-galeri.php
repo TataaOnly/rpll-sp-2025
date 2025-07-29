@@ -119,6 +119,7 @@ ErrorHandler::displaySuccess();
                 echo '<p class="text-gray-500">No images found. Upload some images to get started.</p>';
             }
             ?>
+        </div>
         <button type="button" 
                 onclick="deleteSelectedImages()" 
                 class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">
