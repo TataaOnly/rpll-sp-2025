@@ -8,3 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+document.querySelectorAll('.custom-product-grid .custom-product img').forEach(image => {
+  image.onclick = () => {
+    document.querySelector('.popup-custom-product').style.display = 'block';
+    document.querySelector('.popup-custom-product img').src = image.getAttribute('src');
+  }
+});
+
+document.querySelector('.popup-custom-product span').onclick = () =>{
+  document.querySelector('.popup-custom-product').style.display = 'none';
+}
