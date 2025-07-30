@@ -88,7 +88,7 @@ ErrorHandler::displaySuccess();
             if ($images && !empty($images)) {
                 foreach ($images as $image) {
             ?>
-            <!-- Image Card 1 -->
+            <!-- Image Card -->
             <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
                 <div class="image-preview">
                     <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
