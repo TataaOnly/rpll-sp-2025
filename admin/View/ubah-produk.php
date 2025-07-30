@@ -204,6 +204,7 @@ ErrorHandler::displaySuccess();
                     revertStatusToggle($toggle, $statusText, isActive);
                 });
             });
+        });
         
         // Toast notification function
         function showToast(message, type = 'success') {

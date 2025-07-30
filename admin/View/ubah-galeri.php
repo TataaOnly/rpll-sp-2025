@@ -80,7 +80,7 @@ ErrorHandler::displaySuccess();
         <br />
         <h2 class="text-lg font-semibold mb-4">Existing Images</h2>
         <!-- Gallery Grid -->
-        <div class="gallery-grid">
+        <div class="gallery-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
            <?php
             // Use service to get images
             $images = $gambarService->getAllImagesByProductId($produk_id);
@@ -89,7 +89,6 @@ ErrorHandler::displaySuccess();
                 foreach ($images as $image) {
             ?>
             <!-- Image Card 1 -->
-            <?php foreach ($images as $image): ?>
             <div class="image-card" data-image-id="<?php echo htmlspecialchars($image['gambar_id']); ?>">
                 <div class="image-preview">
                     <img src="../../uploads/<?php echo htmlspecialchars($image['file']); ?>" alt="Sample Image">
@@ -113,20 +112,23 @@ ErrorHandler::displaySuccess();
                 <div class="card-content">
                     <div class="image-filename"><?php echo htmlspecialchars($image['file']); ?></div>
                 </div>
+            </div>
             <?php 
                 }
             } else {
                 echo '<p class="text-gray-500">No images found. Upload some images to get started.</p>';
             }
             ?>
+            
         </div>
         <button type="button" 
                 onclick="deleteSelectedImages()" 
                 class="btn mt-4 mb-4 bg-red-500 hover:bg-red-600 text-white float-right">
             Hapus Gambar Dicentang
         </button>
-
+        
     </main>
+    
 </div>
 
     <script>
