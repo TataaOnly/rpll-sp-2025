@@ -24,7 +24,7 @@ CREATE TABLE kontak (
     email VARCHAR(255) NOT NULL,
     no_telp VARCHAR(13),
     no_wa VARCHAR(13),
-    map VARCHAR(255) COMMENT 'Map coordinates or URL',
+    map text COMMENT 'Map coordinates or URL',
     alamat VARCHAR(255),
     admin_pass varchar(255) NOT NULL
 );
