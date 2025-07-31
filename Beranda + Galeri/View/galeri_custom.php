@@ -4,96 +4,496 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PlastikHB</title>
-  <link rel="stylesheet" href="css/beranda.css">
-  <link rel="stylesheet" href="css/galeri_custom.css">
+  <!-- <link rel="stylesheet" href="css/beranda.css"> -->
+  <!-- <link rel="stylesheet" href="css/galeri_custom.css"> -->
   <script src="js/galeri_custom.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+        background-color: #0056b3;
+        color: #fff;
+        padding: 0 30px 0 30px;
+    }
+
+    h2, h3{
+        text-transform: uppercase;
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    h3{
+        margin: 50px 0;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0 5px;
+      position: relative;
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #75b6fc;
+      transition: width 0.4s ease;
+    }
+
+    .nav-links a:hover {
+      color: #75b6fc;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .logo img{
+        width: 20%;
+        /* height: 10%; */
+    }
+
+    main {
+        padding: 0 0 20px 0 ;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 30px;
+        /* padding: 20px; */
+    }
+
+    .product-grid .product {
+        /* background-color: #f2f2f2; */
+        /* padding: 60px 10px; */
+        margin: 0 50px;
+        text-align: center;
+    }
+
+    .product img{
+        width: 90%;
+        height: 90%;
+        border: 1px solid black;
+    }
+
+    .hidden-product {
+      display: none;
+    }
+      
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        padding: 30px 60px;
+        margin: 0;
+        background-color: #75b6fc;
+    }
+
+    .about-us {
+        padding: 20px;
+    }
+
+    .image-container {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.5s ease;
+        position: absolute;
+        opacity: 0;
+    }
+
+    .image-container img:first-child {
+      opacity: 1;
+    }
+
+    .image-container .dot-container {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+    }
+
+    .image-container .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ccc;
+        transition: background-color 0.5s ease;
+    }
+
+    .image-container .dot.active {
+        background-color: #0056b3;
+    }
+
+    .partner{
+        background-color: #f3f3f6;
+        padding: 20px 70px 70px 70px;
+    }
+
+    .slider{
+        width: 100%;
+        /* border: 1px solid red; */
+        height: var(--height); 
+        overflow: hidden;
+        mask-image: linear-gradient(
+            to right, 
+            transparent, 
+            black 10%, 
+            black 90%, 
+            transparent 100%
+        );
+    }
+
+    .slider .list{
+        display: flex;
+        width: 100%;
+        min-width: calc(var(--quantity) * var(--width));
+        position: relative;
+    }
+
+    .slider .list .item{
+        width: var(--width);
+        height: var(--height);
+        position: absolute;
+        left: 100%;
+        animation: autoRun 10s linear infinite;
+        animation-delay: calc(10s / var(--quantity) * (var(--position) - 1));
+        transition: filter 0.5s;
+    }
+
+    .slider .list .item img{
+        width: 100%;
+    }
+
+    .slider:hover .item{
+        animation-play-state: paused!important;
+        filter: grayscale(1);
+    }
+
+    .slider:hover .item:hover{
+        filter: grayscale(0);
+    }
+
+    button{
+        background-color: #0056b3;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        width: 200px;
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    button a {
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: bolder;
+    }
+
+    button:hover {
+        background-color: #004494;
+    }
+
+    .about-us button{
+        transition: border 1s ease;
+    }
+
+    .about-us button:hover{
+        border: 1px solid #fff;
+    }
+
+    .footer-section {
+        position: relative;
+        background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    .footer-overlay {
+        background-color: rgba(148, 163, 248, 0.8); /* Warna ungu transparan */
+        padding: 60px 60px;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
+        color: black; /* sesuai gambar */
+    }
+
+    .footer-left {
+        width: 60%;
+    }
+
+    .footer-left .footer-logo {
+        max-width: 200px;
+        /* margin-bottom: 15px; */
+        margin: 20px 0;
+        height: 100%;
+    }
+
+    .footer-left p {
+        font-size: 14px;
+        line-height: 1.6;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .footer-right {
+        width: 35%;
+    }
+
+    .footer-right h3 {
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    .footer-right p {
+        color: black;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .footer-bottom {
+        background-color: #0056b3; /* biru */
+        text-align: center;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    @keyframes carousel {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-75%); }
+    }
+
+    @keyframes autoRun {
+        from{
+            left: 100%;
+        }to{
+            left: calc(var(--width) * -1 );
+        }
+    }
+
+    .custom-product-section{
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .custom-product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        padding: 40px 60px;
+    }
+
+    .custom-product {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 3 / 2;
+    }
+
+    .custom-product img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .custom-product:hover img {
+        transform: scale(1.05);
+    }
+
+
+    .custom-product-grid .custom-product:hover img{
+      transform: scale(1.1);
+    }
+
+    .custom-product-section .popup-custom-product{
+      position: fixed;
+      top: 0; left: 0;
+      background-color: rgba(0, 0, 0, .9);
+      height: 100%;
+      width: 100%;
+      z-index: 100;
+      display: none;
+    }
+
+    .custom-product-section .popup-custom-product span{
+      position: absolute;
+      top: 0; right: 10px;
+      font-size: 60px;
+      font-weight: bolder;
+      color: #fff;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .custom-product-section .popup-custom-product img{
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border: 5px solid #fff;
+      border-radius: 5px;
+      width: 750px;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px){
+      .custom-product-grid .custom-product img{
+        width: 95%;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .custom-product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .custom-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .custom-product-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <nav>
-      <div class="logo">PlastikHB</div>
-      <div>
-        <a href="#">Beranda</a>
-        <a href="#">Tentang Kami</a>
+      <div class="logo"><a href="beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
+      <div class="nav-links">
+        <a href="beranda.php">Beranda</a>
+        <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
         <a href="#">Katalog Produk</a>
-        <a href="#">Galeri Custom</a>
-        <a href="#">Hubungi Kami</a>
+        <a href="galeri_custom.php">Galeri Custom</a>
+        <a href="../../hubungikami/View/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>
 
   <main>
-    <div class="product-section">
+    <div class="custom-product-section">
       <center>
         <h2>Galeri Produk Custom PlastikHB</h2>
-        <div class="product-grid">
-          <?php
-            require_once "../Model/config.php";
+        <div class="custom-product-grid">
+          <!-- <?php
+            // require_once "../Model/config.php";
 
-            $sql = "
-              SELECT gambar.*, produk.nama 
-              FROM gambar 
-              JOIN produk ON gambar.produk_id = produk.produk_id 
-              WHERE produk.kategori = 'Custom' 
-              ORDER BY gambar.gambar_id
-            ";
+            // $sql = "
+            //   SELECT gambar.*, produk.nama 
+            //   FROM gambar 
+            //   JOIN produk ON gambar.produk_id = produk.produk_id 
+            //   WHERE produk.kategori = 'Custom' 
+            //   ORDER BY gambar.gambar_id
+            // ";
 
-            $result = $conn->query($sql);
-            if ($result && $result->num_rows > 0) {
-                $index = 0;
-                while ($row = $result->fetch_assoc()) {
-                  $hiddenClass = $index >= 8 ? "hidden-product" : "";
-                  echo "
-                    <div class='product $hiddenClass'>
-                      <img src='../img/{$row['file']}' alt='Gambar Produk Custom'>
-                      <p></p>
-                    </div>
-                  ";
-                  $index++;
-                }
-            } else {
-                echo "<p>Tidak ada produk custom yang ditemukan.</p>";
-            }
+            // $result = $conn->query($sql);
+            // if ($result && $result->num_rows > 0) {
+            //     $index = 0;
+            //     while ($row = $result->fetch_assoc()) {
+            //       $hiddenClass = $index >= 8 ? "hidden-product" : "";
+            //       echo "
+            //         <div class='custom-product $hiddenClass'>
+            //           <img src='../img/{$row['file']}' alt='Gambar Produk Custom'>
+            //           <p></p>
+            //         </div>
+            //       ";
+            //       $index++;
+            //     }
+            // } else {
+            //     echo "<p>Tidak ada produk custom yang ditemukan.</p>";
+            // }
 
-            $conn->close();
-          ?>
+            // $conn->close();
+          ?> -->
+          <div class ='custom-product'><img src='../images/produk1.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk2.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk3.jpeg'></div>
+          <div class ='custom-product'><img src='../images/produk4.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk5.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk6.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk7.jpg'></div>
+          <div class ='custom-product'><img src='../images/produk8.jpg'></div>
+        </div>
+
+        <div class="popup-custom-product">
+            <span>&times;</span>
+            <img src="../img/produk1.jpg" alt="">
         </div>
         <button id="loadMoreBtn"><i>Selengkapnya</i></button>
       </center>
     </div>
   </main>
 
-  <footer>
-    Footer
+  <footer class="footer-section">
+      <div class="footer-overlay">
+          <div class="footer-content">
+              <div class="footer-left">
+                  <img src="../../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
+                  <p>
+                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
+                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
+                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                  </p>
+              </div>
+
+              <div class="footer-right">
+                  <h3>Hubungi kami</h3>
+                  <p>Jl. lorem ipsum blablabal No. 111,<br>Bandung 40111
+                  <br>+62 11 1111111 (phone)
+                  <br>+62 22 2222222 (WhatsApp)
+                  <br>loremipsum@gmail.com</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="footer-bottom">
+          Copyright &copy; 2025 PlastikHB
+      </div>
   </footer>
-
-  <script>
-    const images = document.querySelectorAll('.image-container img');
-    const dots = document.querySelectorAll('.image-container .dot');
-    let currentIndex = 0;
-
-    function showImage(index) {
-      images.forEach((img, i) => {
-        img.style.opacity = i === index ? '1' : '0';
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-      currentIndex = index;
-    }
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        showImage(index);
-      });
-    });
-
-    function cycleImages() {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
-    }
-
-    setInterval(cycleImages, 5000);
-  </script>
 </body>
 </html>

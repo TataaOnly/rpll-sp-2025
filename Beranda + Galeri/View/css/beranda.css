@@ -7,7 +7,7 @@ body {
 header {
     background-color: #0056b3;
     color: #fff;
-    padding: 20px 60px 20px 30px;
+    padding: 0 30px 0 30px;
 }
 
 h2, h3{
@@ -23,12 +23,13 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 10px;
+    padding: 0 5px;
 }
 
 main {
@@ -50,16 +51,82 @@ main {
     text-align: center;
 }
 
-footer {
+/* footer {
     background-color: #0056b3;
     color: #fff;
     padding: 10px;
     text-align: center;
+} */
+
+.footer-section {
+    position: relative;
+    background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
+    color: #fff;
+    font-family: Arial, sans-serif;
 }
 
-.logo{
-    font-size: 24px;
+.footer-overlay {
+    background-color: rgba(148, 163, 248, 0.8); /* Warna ungu transparan */
+    padding: 40px 60px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: black; /* sesuai gambar */
+}
+
+.footer-left {
+    width: 60%;
+}
+
+.footer-left .footer-logo {
+    max-width: 200px;
+    /* margin-bottom: 15px; */
+    margin: 0;
+    height: 100%;
+}
+
+.footer-left p {
+    font-size: 14px;
+    line-height: 1.6;
     font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.footer-right {
+    width: 35%;
+}
+
+.footer-right h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.footer-right p {
+    color: black;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.footer-bottom {
+    background-color: #2050a0; /* biru */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.logo img{
+    width: 20%;
+    /* height: 10%; */
 }
 
 .container {
@@ -208,6 +275,7 @@ button:hover {
 }
 
 .product img{
-    width: 70%;
-    height: 70%;
+    width: 90%;
+    height: 90%;
+    border: 1px solid black;
 }
