@@ -30,7 +30,7 @@ class Produk {
     }
 
     public function getAllProducts() {
-        $query = "SELECT * FROM {$this->table} WHERE produk_id > 1 ORDER BY produk_id"; // Skip first product (ID = 1)
+        $query = "SELECT * FROM {$this->table} WHERE produk_id > 1 ORDER BY produk_id DESC"; // Skip first product (ID = 1)
         $result = $this->conn->query($query);
         
         // Fix: Add error handling
