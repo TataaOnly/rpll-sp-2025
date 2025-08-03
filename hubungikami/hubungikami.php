@@ -13,8 +13,8 @@
       <div class="logo"><a href="../Beranda + Galeri/View/beranda.php"><img src="../images/logoBaru.png" alt=""></a></div>
       <div class="nav-links">
         <a href="../Beranda + Galeri/View/beranda.php">Beranda</a>
-        <a href="../tentangkami/View/tentangkami.php">Tentang Kami</a>
-        <a href="#">Katalog Produk</a>
+        <a href="../tentangkami/tentangkami.php">Tentang Kami</a>
+        <a href="../Catalog/FrontEnd/shelf.php">Katalog Produk</a>
         <a href="../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
         <a href="hubungikami.php">Hubungi Kami</a>
       </div>

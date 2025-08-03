@@ -337,7 +337,7 @@
       <div class="nav-links">
         <a href="beranda.php">Beranda</a>
         <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
-        <a href="#">Katalog Produk</a>
+        <a href="../../Catalog/FrontEnd/shelf.php">Katalog Produk</a>
         <a href="galeri_custom.php">Galeri Custom</a>
         <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
@@ -444,7 +444,7 @@
       <div class="footer-overlay">
         <div class="footer-content">
             <div class="footer-left">
-                <img src="../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
+                <img src="../../images/logo.png" alt="PlastikHB" class="footer-logo">
                 <p>
                     LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
                     TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
@@ -458,7 +458,7 @@
             <div class="footer-right">
                 <h3>Hubungi kami</h3>
                 <?php
-                include '../admin/Helpers/KontakHelper.php';
+                include '../../admin/Helpers/KontakHelper.php';
                 $kontak = KontakHelper::getKontak();
                 if (!$kontak) {
                     // Default contact data as fallback
