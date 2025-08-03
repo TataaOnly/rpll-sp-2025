@@ -1,5 +1,5 @@
 <?php
-require_once("../Model/Produk.php");
+require_once __DIR__ . "/../Model/Produk.php";
 class ProdukService {
 
     private $produkModel;

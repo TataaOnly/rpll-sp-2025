@@ -1,5 +1,5 @@
 <?php
-require_once '../Helpers/KontakHelper.php';
+require_once __DIR__ . '/../Helpers/KontakHelper.php';
 
 echo "<h2>Database Seeding</h2>";
 

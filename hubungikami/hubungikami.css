@@ -1,0 +1,373 @@
+/* PlastikHB - Contact Page Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #0056b3;
+  color: #fff;
+  padding: 0 30px 0 30px;
+}
+
+h2, h3{
+  text-transform: uppercase;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h3{
+  margin: 50px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 5px;
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #75b6fc;
+  transition: width 0.4s ease;
+}
+
+.nav-links a:hover {
+  color: #75b6fc;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.logo img{
+  width: 20%;
+}
+
+main {
+  padding: 0 0 20px 0;
+}
+
+.contact-section {
+  background-color: #e5e5e5;
+  text-align: center;
+  padding: 50px 30px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.contact-section h3 {
+  font-size: 18px;
+  margin: 20px 0;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.contact-subtitle {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 10px 0 15px 0;
+}
+
+.contact-description {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  font-size: 16px;
+  color: #333;
+}
+
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.contact-card {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 30px 20px;
+  width: 250px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
+}
+
+.contact-card h4 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.contact-card p {
+  margin: 0;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.contact-icon {
+  width: 40px;
+  height: auto;
+}
+
+.map-section {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.map-section iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.footer-section {
+  position: relative;
+  background: url('../images/pabrikPlastikHB.jpg') center/cover no-repeat;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.footer-overlay {
+  background-color: rgba(148, 163, 248, 0.8);
+  padding: 60px 60px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: black; 
+}
+
+.footer-left {
+  width: 60%;
+}
+
+.footer-left .footer-logo {
+  max-width: 200px;
+  margin: 20px 0;
+  height: 100%;
+}
+
+.footer-left p {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.footer-right {
+  width: 35%;
+}
+
+.footer-right h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.footer-right p {
+  color: black;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.footer-bottom {
+  background-color: #0056b3;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* WhatsApp Styles */
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #25D366;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  padding: 15px 20px;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+  background: #128C7E;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+  color: white;
+  text-decoration: none;
+}
+
+.whatsapp-float img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.whatsapp-float span {
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.8);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+}
+
+/* WhatsApp Button in Contact Card */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #25D366;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+  transform: translateY(-1px);
+  color: white;
+  text-decoration: none;
+}
+
+.whatsapp-btn img {
+  filter: brightness(0) invert(1);
+}
+
+/* Responsive Design for WhatsApp Elements */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+  
+  .whatsapp-float span {
+    display: none;
+  }
+  
+  .whatsapp-float img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-float {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-cards {
+    gap: 20px;
+  }
+  
+  .contact-card {
+    width: 90%;
+    max-width: 300px;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-left, .footer-right {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .logo img {
+    width: 30%;
+  }
+  
+  .contact-section {
+    padding: 30px 15px;
+  }
+  
+  .footer-overlay {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    display: none; /* Consider implementing mobile menu */
+  }
+  
+  .contact-subtitle {
+    font-size: 18px;
+  }
+  
+  .contact-description {
+    font-size: 14px;
+  }
+  
+  .map-section iframe {
+    height: 300px;
+  }
+}
