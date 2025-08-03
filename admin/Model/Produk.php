@@ -30,7 +30,7 @@ class Produk {
     }
 
     public function getAllProducts() {
-        $query = "SELECT * FROM {$this->table}"; // Fix: Use table property consistently
+        $query = "SELECT * FROM {$this->table} WHERE produk_id > 1 ORDER BY produk_id"; // Skip first product (ID = 1)
         $result = $this->conn->query($query);
         
         // Fix: Add error handling
@@ -39,6 +39,33 @@ class Produk {
         }
         
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getAllProductsIncludingCustom() {
+        $query = "SELECT * FROM {$this->table} ORDER BY produk_id"; // Include all products
+        $result = $this->conn->query($query);
+        
+        // Fix: Add error handling
+        if (!$result) {
+            return false;
+        }
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getCustomProduct() {
+        $stmt = $this->conn->prepare("SELECT * FROM {$this->table} WHERE produk_id = 1 OR nama = 'custom' LIMIT 1");
+        
+        if (!$stmt) {
+            return false;
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        $stmt->close();
+        
+        return $data;
     }
 
     public function findById($id) {

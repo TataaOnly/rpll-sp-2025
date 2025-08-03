@@ -22,17 +22,12 @@ ErrorHandler::displaySuccess();
         $produkService = new ProdukService();
         $gambarService = new GambarService();
         
-        // Find gallery product (assuming it's the one with 'custom' name)
-        $products = $produkService->getAllProducts();
+        // Get custom product directly
+        $customProduct = $produkService->getCustomProduct();
         $produk_id = 0;
         
-        if ($products) {
-            foreach ($products as $product) {
-                if (stripos($product['nama'], 'custom') !== false) {
-                    $produk_id = $product['produk_id'];
-                    break;
-                }
-            }
+        if ($customProduct) {
+            $produk_id = $customProduct['produk_id'];
         }
         
         // If no custom product found, create one

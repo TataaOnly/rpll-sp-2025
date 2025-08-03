@@ -11,6 +11,14 @@ class ProdukService {
     public function getAllProducts() {
         return $this->produkModel->getAllProducts();
     }
+
+    public function getAllProductsIncludingCustom() {
+        return $this->produkModel->getAllProductsIncludingCustom();
+    }
+
+    public function getCustomProduct() {
+        return $this->produkModel->getCustomProduct();
+    }
     public function findProductById($id) {
         return $this->produkModel->findById($id);
     }
