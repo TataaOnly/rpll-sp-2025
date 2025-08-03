@@ -213,59 +213,6 @@ main {
   font-weight: bold;
 }
 
-/* WhatsApp Styles */
-
-/* Floating WhatsApp Button */
-.whatsapp-float {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #25D366;
-  color: white;
-  border-radius: 50px;
-  text-decoration: none;
-  padding: 15px 20px;
-  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: bold;
-  font-size: 14px;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  animation: pulse 2s infinite;
-}
-
-.whatsapp-float:hover {
-  background: #128C7E;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
-  color: white;
-  text-decoration: none;
-}
-
-.whatsapp-float img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-}
-
-.whatsapp-float span {
-  white-space: nowrap;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-  }
-  50% {
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.8);
-  }
-  100% {
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-  }
-}
-
 /* WhatsApp Button in Contact Card */
 .whatsapp-btn {
   display: inline-flex;

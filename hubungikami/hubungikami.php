@@ -89,16 +89,6 @@
     </section>
     </main>
 
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $kontak['no_wa']); ?>?text=Halo,%20saya%20ingin%20bertanya%20tentang%20produk%20PlastikHB" 
-     class="whatsapp-float" 
-     target="_blank" 
-     rel="noopener noreferrer"
-     title="Chat via WhatsApp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
-    <span>Chat WhatsApp</span>
-  </a>
-
   <footer class="footer-section">
       <div class="footer-overlay">
         <div class="footer-content">
