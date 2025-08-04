@@ -1,5 +1,5 @@
 <?php
-require_once("../Model/Gambar.php");
+require_once __DIR__ . "/../Model/Gambar.php";
 
 class GambarService {
     private $gambarModel;

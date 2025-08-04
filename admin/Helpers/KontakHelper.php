@@ -1,5 +1,5 @@
 <?php
-require_once '../Model/Database.php';
+require_once __DIR__ . '/../Model/Database.php';
 
 class KontakHelper {
     private static $conn;
@@ -14,12 +14,27 @@ class KontakHelper {
 
     public static function getKontak() {
         $conn = self::getConnection();
-        $result = $conn->query("SELECT * FROM kontak LIMIT 1");
+
+        $result = $conn->query("SELECT kontak_id, nama, email, no_telp, no_wa, map, alamat FROM kontak LIMIT 1");
         if (!$result) {
             return false;
         }
 
         return $result->fetch_assoc();
+    }
+
+    public static function getAdminPassword() {
+        $conn = self::getConnection();
+
+        $result = $conn->query("SELECT admin_pass FROM kontak LIMIT 1");
+        if (!$result) {
+            return false; // Error executing query
+        }
+        $kontak = $result->fetch_assoc();
+        if (!$kontak || !isset($kontak['admin_pass'])) {
+            return false; // No admin password set
+        }
+        return $kontak['admin_pass'];
     }
 
     public static function updateKontak($data) {
@@ -65,13 +80,19 @@ class KontakHelper {
     }
 
     public static function verifyAdminPassword($password) {
-        $kontak = self::getKontak();
+        // INPUT VALIDATION
+        if (empty($password) || !is_string($password)) {
+            return false;
+        }
         
-        if(!$kontak || !isset($kontak['admin_pass'])) {
-            return false; // No admin password set
+        $hashedPassword = self::getAdminPassword();
+        
+        if (!$hashedPassword) {
+            error_log("KontakHelper: No admin password available for verification");
+            return false;
         }
 
-        return password_verify($password, $kontak['admin_pass']);
+        return password_verify($password, $hashedPassword);
     }
 
     public static function updateAdminPassword($password) {

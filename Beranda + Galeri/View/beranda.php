@@ -72,6 +72,11 @@
       padding: 0 0 20px 0 ;
     }
 
+    .product-section {
+      text-align: center;
+      padding: 20px;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -84,12 +89,30 @@
       /* background-color: #f2f2f2; */
       /* padding: 60px 10px; */
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product a {
+      display: block;
+      text-decoration: none;
+      color: inherit;
     }
 
     .product img{
         width: 100%;
-        height: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: opacity 0.3s ease;
         /* border: 1px solid black; */
+    }
+
+    .product img:hover {
+        opacity: 0.8;
     }
 
     .hidden-product {
@@ -313,10 +336,10 @@
       <div class="logo"><a href="beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
       <div class="nav-links">
         <a href="beranda.php">Beranda</a>
-        <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
-        <a href="#">Katalog Produk</a>
+        <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
+        <a href="../../Catalog/FrontEnd/shelf.php">Katalog Produk</a>
         <a href="galeri_custom.php">Galeri Custom</a>
-        <a href="../../hubungikami/View/hubungikami.php">Hubungi Kami</a>
+        <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>
@@ -341,9 +364,9 @@
     </div>
 
     <div class="partner">
-      <center>
+      <div style="text-align: center;">
         <h3>Mitra Kami</h3>
-      </center>
+      </div>
       <div class="slider" style="
         --width: 100px;
         --height: 50px;
@@ -365,66 +388,111 @@
     </div>
 
     <div class="product-section">
-      <center>
         <h2>Spesialisasi Produk Plastik PlastikHB</h2>
         <div class="product-grid">
-          <!-- <?php
-            // require_once "../Model/config.php";
-
-            // $sql = "Select * from gambar ORDER BY gambar_id LIMIT 8";
-            // $result = $conn->query($sql);
-            // if ($result->num_rows > 0) {
-            //     while($row = $result->fetch_assoc()) {
-            //         echo "
-            //             <div class ='product'><img src='../".$row['file']."'></div>
-            //         ";
-            //     }
-            // } else {
-            //     echo "Tidak ada produk yang ditemukan.";
-            // }
-            ?> -->
-            <div class ='product'><img src='../images/produk1.jpg'></div>
-            <div class ='product'><img src='../images/produk2.jpg'></div>
-            <div class ='product'><img src='../images/produk3.jpeg'></div>
-            <div class ='product'><img src='../images/produk4.jpg'></div>
-            <div class ='product'><img src='../images/produk5.jpg'></div>
-            <div class ='product'><img src='../images/produk6.jpg'></div>
-            <div class ='product'><img src='../images/produk7.jpg'></div>
-            <div class ='product'><img src='../images/produk8.jpg'></div>
+          <?php
+            require_once '../../admin/Service/ProdukService.php';
+            require_once '../../admin/Service/GambarService.php';
+            
+            $produkService = new ProdukService();
+            $gambarService = new GambarService();
+            $products = $produkService->getAllProducts();
+            
+            if ($products && count($products) > 0) {
+                // Display up to 8 products from database
+                $displayCount = 0;
+                foreach ($products as $product) {
+                    if ($displayCount >= 8) break; // Limit to 8 products
+                    
+                    $produk_id = $product['produk_id'];
+                    $productName = htmlspecialchars($product['nama']);
+                    
+                    // Get first image for this product
+                    $images = $gambarService->getAllImagesByProductId($produk_id);
+                    $imageSrc = '';
+                    if ($images && count($images) > 0) {
+                        $imageSrc = '../../uploads/' . $images[0]['file'];
+                    } else {
+                        $imageSrc = '../../images/icon.png';
+                    }
+                    
+                    echo "<div class='product'>
+                            <a href='../../Catalog/FrontEnd/details.php?id={$produk_id}' title='{$productName}'>
+                                <img src='{$imageSrc}' alt='{$productName}' onerror=\"this.src='../../images/icon.png'\">
+                            </a>
+                          </div>";
+                    $displayCount++;
+                }
+                
+                // Fill remaining slots with empty divs
+                for ($i = $displayCount; $i < 8; $i++) {
+                    echo "<div class='product'></div>";
+                }
+            } else {
+                // If no products, show 8 empty slots
+                for ($i = 0; $i < 8; $i++) {
+                    echo "<div class='product'></div>";
+                }
+            }
+            ?>
         </div>
-         <button><a href="#"><i>Jelajahi Produk Kami</i></a></button>
-      </center>
+         <button><a href="../../Catalog/FrontEnd/shelf.php"><i>Jelajahi Produk Kami</i></a></button>
     </div>
   </main>
 
   <footer class="footer-section">
       <div class="footer-overlay">
-          <div class="footer-content">
-              <div class="footer-left">
-                  <img src="../../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
-                  <p>
-                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                      LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                      TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
-                  </p>
-              </div>
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="../../images/logo.png" alt="PlastikHB" class="footer-logo">
+                <p>
+                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
+                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
+                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
+                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                </p>
+            </div>
 
-              <div class="footer-right">
-                  <h3>Hubungi kami</h3>
-                  <p>Jl. lorem ipsum blablabal No. 111,<br>Bandung 40111
-                  <br>+62 11 1111111 (phone)
-                  <br>+62 22 2222222 (WhatsApp)
-                  <br>loremipsum@gmail.com</p>
-              </div>
-          </div>
-      </div>
+            <div class="footer-right">
+                <h3>Hubungi kami</h3>
+                <?php
+                include '../../admin/Helpers/KontakHelper.php';
+                $kontak = KontakHelper::getKontak();
+                if (!$kontak) {
+                    // Default contact data as fallback
+                    $kontak = [
+                        'nama' => 'PlastikHB Admin',
+                        'email' => 'admin@plastikhb.com',
+                        'no_telp' => '081234567890',
+                        'no_wa' => '081234567890',
+                        'map' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0104676903975!2d107.6160988!3d-6.889348799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e655d336aaab%3A0xc48b605e8e3d2915!2sInstitut%20Teknologi%20Harapan%20Bangsa!5e0!3m2!1sen!2sid!4v1753878291876!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+                        'alamat' => 'Alamat Toko Plastik',
+                    ];
+                }
+                
+                // Ensure all required fields exist with safe defaults
+                $kontak = array_merge([
+                    'nama' => 'PlastikHB',
+                    'email' => 'info@plastikhb.com',
+                    'no_telp' => 'Tidak tersedia',
+                    'no_wa' => 'Tidak tersedia',
+                    'alamat' => 'Alamat belum diatur',
+                    'map' => '<p>Peta belum tersedia</p>'
+                ], $kontak);
+                ?>
+                <p><?php echo htmlspecialchars($kontak['alamat']); ?>
+                <br><?php echo htmlspecialchars($kontak['no_telp']); ?> (phone)
+                <br><?php echo htmlspecialchars($kontak['no_wa']); ?> (WhatsApp)
+                <br><?php echo htmlspecialchars($kontak['email']); ?></p>
+            </div>
+        </div>
+    </div>
 
-      <div class="footer-bottom">
-          Copyright &copy; 2025 PlastikHB
-      </div>
+    <div class="footer-bottom">
+        Copyright &copy; 2025 PlastikHB
+    </div>
   </footer>
 </body>
 </html>
