@@ -417,7 +417,7 @@
                     }
                     
                     echo "<div class='product'>
-                            <a href='../../Catalog/Frontend/details.php?id={$produk_id}' title='{$productName}'>
+                            <a href='../../Catalog/FrontEnd/details.php?id={$produk_id}' title='{$productName}'>
                                 <img src='{$imageSrc}' alt='{$productName}' onerror=\"this.src='../../images/icon.png'\">
                             </a>
                           </div>";
