@@ -436,7 +436,7 @@
             }
             ?>
         </div>
-         <button><a href="../../Catalog/Frontend/shelf.php"><i>Jelajahi Produk Kami</i></a></button>
+         <button><a href="../../Catalog/FrontEnd/shelf.php"><i>Jelajahi Produk Kami</i></a></button>
     </div>
   </main>
 
