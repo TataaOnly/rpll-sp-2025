@@ -6,145 +6,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Katalog Produk | PlastikHB</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #fff;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            padding: 16px 32px;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-right: 40px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav a {
-            text-decoration: none;
-            color: #222;
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .nav a:hover {
-            color: #0078d7;
-        }
-
-        .main {
-            padding: 32px;
-        }
-
-        .catalog-title {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 24px;
-        }
-
-        .filter-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-bottom: 16px;
-            gap: 8px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 32px;
-            max-width: 900px;
-            margin: 0 auto 32px auto;
-        }
-
-        .product-card {
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card .product-footer {
-            background: #29aafc;
-            color: #fff;
-            text-align: center;
-            padding: 12px 0;
-            font-weight: 500;
-            border-top: 1px solid #eee;
-        }
-
-        .product-card.habis {
-            background: #eee;
-        }
-
-        .product-card.habis::before {
-            content: 'Habis';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-20deg);
-            color: #888;
-            font-size: 2rem;
-            font-weight: bold;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .footer {
-            border-top: 1px solid #ccc;
-            text-align: center;
-            padding: 16px;
-            color: #888;
-            margin-top: 32px;
-        }
-
-        .filter-row input[type="checkbox"] {
-            margin-right: 8px;
-            transform: scale(2.5)
-        }
-    </style>
+    <link rel="stylesheet" href="css/shelf.css">
 </head>
 
 <body>
-    <div class="header">
-        <div class="logo">PlastikHB</div>
-        <nav class="nav">
-            <a href="#">Beranda</a>
-            <a href="#">Tentang Kami</a>
-            <a href="#">Katalog Produk</a>
-            <a href="#">Galeri Custom</a>
-            <a href="#">Hubungi Kami</a>
-        </nav>
-    </div>
-    <div class="main">
-        <div class="catalog-title">Katalog Produk</div>
-        <div class="filter-row">
-            <input type="checkbox" id="hide-habis" onclick="toggleHabis()">
-            <label for="hide-habis">Sembunyikan Barang Habis</label>
+    <div class="page-container">
+        <div class="header">
+            <div class="logo"><a href="../../Beranda + Galeri/View/beranda.php"><img src="../../images/logoBaru.png" alt="PlastikHB Logo"></a></div>
+            <nav class="nav-links">
+                <a href="../../Beranda + Galeri/View/beranda.php">Beranda</a>
+                <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
+                <a href="shelf.php">Katalog Produk</a>
+                <a href="../../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
+                <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
+            </nav>
         </div>
-        <div class="product-grid" id="productGrid">
-            <div>Loading...</div>
+        <div class="main">
+            <div class="catalog-title"></div>
+            <div class="button-right">
+                <div class="filter-row">
+                    <input type="checkbox" id="hide-habis" onclick="toggleHabis()">
+                    <label for="hide-habis">Sembunyikan Barang Habis</label>
+                </div>
+            </div>
+            <div class="product-grid" id="productGrid">
+                <div>Loading...</div>
+            </div>
         </div>
+        <div class="footer">&copy; Copyright from PlastikHB</div>
     </div>
-    <div class="footer">&copy; Copyright from PlastikHB</div>
     <script>
     let products = [];
     function renderProducts() {
@@ -167,11 +57,19 @@
                     window.location.href = 'details.php?id=' + row.produk_id;
                 }
             };
-            // pasang image disini if needed
-            // const img = document.createElement('img');
-            // img.src = row.image_url;
-            // img.alt = row.nama;
-            // card.appendChild(img);
+            // Render rectangular product image from DB (first image)
+            let imgSrc = '../../images/noimg.png';
+            if (Array.isArray(row.images) && row.images.length > 0 && row.images[0].file) {
+                imgSrc = '../../uploads/' + row.images[0].file;
+            }
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = row.nama;
+            img.style.width = '100%';
+            img.style.height = '180px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '8px 8px 0 0';
+            card.appendChild(img);
             const footer = document.createElement('div');
             footer.className = 'product-footer';
             footer.textContent = row.nama;

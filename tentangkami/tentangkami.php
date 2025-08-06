@@ -385,9 +385,9 @@
       <div class="nav-links">
         <a href="../Beranda + Galeri/View/beranda.php">Beranda</a>
         <a href="tentangkami.php">Tentang Kami</a>
-        <a href="../Catalog/FrontEnd/shelf.php">Katalog Produk</a>
+        <a href="../Catalog/Frontend/shelf.php">Katalog Produk</a>
         <a href="../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
-        <a href="../hubungikami/View/hubungikami.php">Hubungi Kami</a>
+        <a href="../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>
