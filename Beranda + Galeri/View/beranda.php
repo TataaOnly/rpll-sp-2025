@@ -313,10 +313,10 @@
       <div class="logo"><a href="beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
       <div class="nav-links">
         <a href="beranda.php">Beranda</a>
-        <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
+        <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
         <a href="#">Katalog Produk</a>
         <a href="galeri_custom.php">Galeri Custom</a>
-        <a href="../../hubungikami/View/hubungikami.php">Hubungi Kami</a>
+        <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>
@@ -325,8 +325,8 @@
     <div class="container">
       <div class="about-us">
         <h2>Tentang Kami</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <button><a href="#">Jelajahi Kami</a></button>
+        <p>PlastikHB adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
+        <button><a href="../../tentangkami/tentangkami.php">Jelajahi Kami</a></button>
       </div>
       <div class="image-container">
         <img src="../images/ATCY2.jpg" alt="Gambar Produk 1">

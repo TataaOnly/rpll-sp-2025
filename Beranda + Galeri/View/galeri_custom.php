@@ -404,10 +404,10 @@
       <div class="logo"><a href="beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
       <div class="nav-links">
         <a href="beranda.php">Beranda</a>
-        <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
+        <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
         <a href="#">Katalog Produk</a>
         <a href="galeri_custom.php">Galeri Custom</a>
-        <a href="../../hubungikami/View/hubungikami.php">Hubungi Kami</a>
+        <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>

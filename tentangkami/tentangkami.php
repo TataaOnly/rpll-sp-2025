@@ -63,6 +63,11 @@
       width: 100%;
     }
 
+    .logo{
+      padding-right: 0;
+      margin-right: 0;
+    }
+
     .logo img{
       width: 20%;
     }
@@ -72,38 +77,89 @@
     }
 
     .sejarah-section {
-      display: flex;
-      padding: 50px 60px;
+      padding: 50px 80px;
       border-left: 1px solid #ccc;
       border-right: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
+    }
+
+    .sejarah-item {
+      display: flex;
+      margin-bottom: 50px; 
     }
 
     .sejarah-title {
       flex: 1;
       text-align: right;
       padding-right: 20px;
-      font-weight: bold;
-      font-size: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      /* justify-content: center; */
     }
 
     .sejarah-title p {
       margin: 0;
       line-height: 1.2;
-      font-size: 24px;
+      font-size: 34px;
+    }
+
+    .vertical-line {
+      width: 1px;
+      background-color: #444;
+      margin: 0 20px;
+      height: 200px; /* ← Ubah sesuai kebutuhan */
     }
 
     .sejarah-content {
       flex: 3;
       padding-left: 30px;
-      border-left: 1px solid #444;
+      /* border-left: 1px solid #444; */
     }
 
-    .sejarah-content p{
+    .sejarah-content p {
       padding-right: 150px;
+    }
+
+    .sejarah-content p:nth-child(1) {
+      font-size: larger;
+      font-weight: bold;
+    }
+
+    .sejarah-content img {
+      width: 60%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .revealing-image {
+      view-timeline-name: --revealing-image;
+      view-timeline-axis: block;
+      animation: linear reveal both;
+      animation-timeline: --revealing-image;
+      animation-range: entry 25% cover 50%;
+    }
+
+    .fade-slide-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      will-change: opacity, transform;
+    }
+
+    .fade-slide-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        clip-path: inset(45% 20% 45% 20%);
+      }
+      to {
+        opacity: 1;
+        clip-path: inset(0% 0% 0% 0%);
+      }
     }
 
     .visi-misi-section {
@@ -111,6 +167,7 @@
       padding: 50px 100px;
       border-left: 1px solid #ccc;
       border-right: 1px solid #ccc;
+      /* min-width: 80%; */
     }
 
     .visi-misi-wrapper {
@@ -130,6 +187,11 @@
 
     .misi {
       text-align: left;
+    }
+
+    .misi ol{
+      padding-left: 20px;
+      
     }
 
     .visi-misi-wrapper h3{
@@ -165,6 +227,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 17px;
     }
 
     .arrow {
@@ -185,6 +248,7 @@
         max-height 1s ease,
         padding 1s ease,
         opacity 1s ease;
+      font-size: 17px;
     }
 
     .toggle-item.active .toggle-content {
@@ -201,117 +265,6 @@
       margin: 30px 0;
     }
     
-    .image-container {
-        position: relative;
-        height: 400px;
-        overflow: hidden;
-    }
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 0.5s ease;
-        position: absolute;
-        opacity: 0;
-    }
-
-    .image-container img:first-child {
-      opacity: 1;
-    }
-
-    .image-container .dot-container {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 10px;
-    }
-
-    .image-container .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #ccc;
-        transition: background-color 0.5s ease;
-    }
-
-    .image-container .dot.active {
-        background-color: #0056b3;
-    }
-
-    .partner{
-        background-color: #f3f3f6;
-        padding: 20px 70px 70px 70px;
-    }
-
-    .slider{
-        width: 100%;
-        /* border: 1px solid red; */
-        height: var(--height); 
-        overflow: hidden;
-        mask-image: linear-gradient(
-            to right, 
-            transparent, 
-            black 10%, 
-            black 90%, 
-            transparent 100%
-        );
-    }
-
-    .slider .list{
-        display: flex;
-        width: 100%;
-        min-width: calc(var(--quantity) * var(--width));
-        position: relative;
-    }
-
-    .slider .list .item{
-        width: var(--width);
-        height: var(--height);
-        position: absolute;
-        left: 100%;
-        animation: autoRun 10s linear infinite;
-        animation-delay: calc(10s / var(--quantity) * (var(--position) - 1));
-        transition: filter 0.5s;
-    }
-
-    .slider .list .item img{
-        width: 100%;
-    }
-
-    .slider:hover .item{
-        animation-play-state: paused!important;
-        filter: grayscale(1);
-    }
-
-    .slider:hover .item:hover{
-        filter: grayscale(0);
-    }
-
-    button{
-        background-color: #0056b3;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        width: 200px;
-        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-
-    button a {
-        color: white;
-        text-decoration: none;
-        font-size: 15px;
-        font-weight: bolder;
-    }
-
-    button:hover {
-        background-color: #004494;
-    }
-
     .footer-section {
         position: relative;
         background: url('../images/pabrikPlastikHB.jpg') center/cover no-repeat;
@@ -345,10 +298,9 @@
     }
 
     .footer-left p {
-        font-size: 14px;
+        font-size: 17px;
         line-height: 1.6;
         font-weight: bold;
-        text-transform: uppercase;
         margin: 0;
     }
 
@@ -387,20 +339,37 @@
         <a href="tentangkami.php">Tentang Kami</a>
         <a href="#">Katalog Produk</a>
         <a href="../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
-        <a href="../hubungikami/View/hubungikami.php">Hubungi Kami</a>
+        <a href="../hubungikami/hubungikami.php">Hubungi Kami</a>
       </div>
     </nav>
   </header>
 
   <main>
     <section class="sejarah-section">
-      <div class="sejarah-title">
-        <p>Sejarah<br>PlastikHB</p>
+      <div class="sejarah-item fade-slide-up">
+        <div class="sejarah-title">
+          <p>Sejarah<br>PlastikHB</p>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="sejarah-content">
+          <p>Berdiri sejak tahun 2012, PlastikHB adalah sebuah perusahaan manufaktur dan distribusi yang secara khusus bergerak di bidang produksi plastik kemasan. Perusahaan ini mengawali langkah dari skala yang relatif kecil di kota Bandung, dengan fokus utama pada penyediaan plastik kemasan sederhana bagi para pelaku usaha mikro dan kecil yang beroperasi di wilayah Jawa Barat dan sekitarnya.</p>
+          <p>Seiring berjalannya waktu, perusahaan terus berinovasi dan berkembang untuk memenuhi permintaan pasar yang meningkat. Pada tahun 2014, kapasitas produksi diperluas dengan penambahan mesin blowing dan cutting, serta mulai mengoperasikan mesin cetak flexo untuk memproduksi kemasan bermotif. Dua tahun kemudian, tepatnya pada 2016, dilakukan diversifikasi produk dengan memproduksi plastik vakum dan plastik standing pouch untuk kebutuhan pengemasan makanan dan industri kecil menengah (IKM).</p>
+          <p>Memasuki tahun 2018, produk berhasil menembus pasar nasional. Melalui distribusi ke berbagai kota besar di Indonesia, kemasan mulai digunakan oleh ritel skala nasional, seperti supermarket dan distributor kemasan.</p>
+          <p>Pada tahun 2019, secara resmi ditawarkan layanan custom printing, memungkinkan pelanggan mencetak logo dan desain merek mereka sendiri. Layanan ini dapat diterapkan untuk kemasan produk makanan, pakaian, maupun produk retail lainnya.</p>
+          <p>Pada tahun 2021, dilakukan modernisasi pabrik dengan sistem produksi semi-otomatis serta penerapan kontrol kualitas yang lebih ketat. Selain itu, juga mulai diterapkan prinsip keberlanjutan dalam proses produksi untuk mendukung kelestarian lingkungan.</p>
+          <img src="../images/pabrikPlastikHB2.jpg" class="revealing-image" alt="" >
+        </div>
       </div>
-      <div class="sejarah-content">
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      <div class="sejarah-item fade-slide-up">
+        <div class="sejarah-title">
+          <p>Komitmen<br>PlastikHB</p>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="sejarah-content">
+          <p>Sejak awal pendirian, PlastikHB telah berkomitmen penuh untuk menjadi mitra yang dapat diandalkan. Tidak hanya menyediakan produk kemasan standar, tetapi juga melayani pesanan produk custom yang dirancang secara spesifik untuk memenuhi kebutuhan unik setiap konsumen.</p>
+          <p>Komitmen terhadap kepuasan pelanggan diwujudkan melalui proses produksi yang fleksibel, konsultasi desain yang profesional, serta ketepatan waktu dalam pengiriman. Setiap tahapan dikerjakan dengan perhatian terhadap detail, guna memastikan bahwa solusi kemasan yang diberikan tidak hanya fungsional tetapi juga mampu meningkatkan nilai jual produk pelanggan.</p>
+          <!-- <img src="../images/pabrikPlastikHB2.jpg" class="revealing-image" alt=""> -->
+        </div>
       </div>
     </section>
 
@@ -408,50 +377,57 @@
       <div class="visi-misi-wrapper">
         <div class="visi">
           <h3>Visi</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p>Menjadi perusahaan produsen dan penyedia kemasan plastik terdepan di Indonesia yang dikenal luas atas kualitas produk, inovasi layanan, komitmen terhadap keberlanjutan, dan kepuasan pelanggan. Kami bertekad untuk terus berkembang sebagai mitra utama bagi pelaku usaha dari skala kecil hingga besar, serta turut berkontribusi dalam membangun industri kemasan nasional yang lebih efisien, profesional, dan ramah lingkungan.</p>
         </div>
         <div class="separator-line"></div>
         <div class="misi">
           <h3>Misi</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p>
+            <ol>
+              <li>Menyediakan produk plastik berkualitas tinggi sesuai dengan kebutuhan pelanggan.</li>
+              <li>Meningkatkan layanan dan teknologi produksi untuk memenuhi permintaan pasar yang dinamis.</li>
+              <li>Berkomitmen terhadap prinsip berkelanjutan dengan menghadirkan opsi produk ramah lingkungan.</li>
+              <li>Memberdayakan UMKM melalui kemasan berkualitas dan layanan custom yang terjangkau.</li>
+            </ol>
+          </p>
         </div>
       </div>
 
       <div class="kebijakan-umum">
         <h3>Kebijakan Umum</h3>
         <ul>
-          <li class="toggle-item">
+          <li class="toggle-item active">
             <div class="toggle-header">
-              <strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong>
+              <strong>Berkomitmen terhadap Kualitas Produk</strong>
               <span class="arrow"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/></span>
             </div>
             <div class="toggle-content">
-              Penjelasan lengkap untuk poin pertama ini, bisa berupa paragraf panjang atau komponen lainnya.
+              Komitmen penuh untuk hanya memproduksi dan menyediakan produk plastik yang memenuhi standar mutu tinggi, mulai dari bahan baku pilihan, proses produksi yang terkontrol, hingga pemeriksaan kualitas akhir. Setiap produk diuji secara ketat agar konsisten, tahan lama, dan aman digunakan oleh pelanggan di berbagai sektor industri.
             </div>
           </li>
           <li class="toggle-item">
             <div class="toggle-header">
-              <strong>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</strong>
+              <strong>Memprioritaskan utama kepuasaan utama</strong>
               <span class="arrow"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/></span>
             </div>
             <div class="toggle-content">
-              Detail dari sejarah penggunaannya sejak abad ke-16.
+              Kepuasan pelanggan adalah pusat dari setiap proses bisnis. Melalui pendekatan yang responsif, layanan yang ramah, dan sistem umpan balik yang terbuka, kami secara aktif mendengarkan kebutuhan pelanggan dan berusaha memberikan solusi kemasan yang tepat waktu, fleksibel, dan sesuai harapan.
             </div>
           </li>
           <li class="toggle-item">
             <div class="toggle-header">
-              <strong>Lorem Ipsum passages, and more recently with desktop publishing software.</strong>
+              <strong>Perbaikan Berkelanjutan</strong>
               <span class="arrow"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/></span>
             </div>
             <div class="toggle-content">
-              Bagaimana Lorem Ipsum digunakan dalam software modern saat ini.
+              PlastikHB senantiasa menjalankan evaluasi rutin terhadap seluruh proses operasional, mulai dari desain produk hingga distribusi. Kami mendorong inovasi, penggunaan teknologi terbaru, serta pelatihan internal bagi seluruh tim agar kualitas produk dan layanan terus meningkat dan tetap relevan terhadap dinamika pasar.
             </div>
           </li>
         </ul>
       </div>
     </section>
 
-    <div class="tagline">
+    <div class="tagline fade-slide-up">
       “Mudah, Cepat, dan Sesuai Pesanan Anda.”
     </div>
   </main>
@@ -463,12 +439,8 @@
             <div class="footer-left">
                 <img src="../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
                 <p>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                    Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
+                    Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
                 </p>
             </div>
 
@@ -478,6 +450,23 @@
                 <br>+62 11 1111111 (phone)
                 <br>+62 22 2222222 (WhatsApp)
                 <br>loremipsum@gmail.com</p>
+                <!-- <?php
+                    // require_once '../Beranda + Galeri/Model/config.php';
+
+                    // $sql = "Select * from kontak where kontak_id = 1";
+                    // $result = $conn->query($sql);
+                    // if ($result->num_rows > 0) {
+                    //     $row = $result->fetch_assoc();
+                    //     echo "
+                    //       <p>".$row['alamat']."
+                    //       <br>".$row['no_telp']."
+                    //       <br>".$row['no_wa']."
+                    //       <br>".$row['email']."</p>
+                    //     ";
+                    // } else {
+                    //     echo "<p>Informasi kontak tidak tersedia.</p>";
+                    // }
+                ?> -->
             </div>
         </div>
     </div>
@@ -494,6 +483,23 @@
         parent.classList.toggle('active');
       });
     });
+
+  // Scroll animation that works in both directions (down & up)
+  const fadeEls = document.querySelectorAll('.fade-slide-up');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  fadeEls.forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
