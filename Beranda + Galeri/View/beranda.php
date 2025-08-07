@@ -347,7 +347,7 @@
     <div class="container">
       <div class="about-us">
         <h2>Tentang Kami</h2>
-        <p><b>PlastikHB</b> adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
+        <p>PlastikHB adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
         <button><a href="../../tentangkami/tentangkami.php">Jelajahi Kami</a></button>
       </div>
       <div class="image-container">
