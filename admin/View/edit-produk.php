@@ -1,40 +1,46 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-    }   
-$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
-$old = isset($_SESSION['old']) ? $_SESSION['old'] : [];
-unset($_SESSION['errors']);
-unset($_SESSION['old']);
-include_once '../Model/config.php';
-if (isset($_GET['id'])) {
-    $produk_id = mysqli_real_escape_string($conn, $_GET['id']);
-    $query = "SELECT * FROM produk WHERE produk_id = '$produk_id'";
-    $result = mysqli_query($conn, $query);
-    $produk = mysqli_fetch_assoc($result);
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle();
 
-    // Get existing images
-    $image_query = "SELECT * FROM gambar WHERE produk_id = '$produk_id'";
-    $image_result = mysqli_query($conn, $image_query);
-    $existing_images = [];
-    while ($row = mysqli_fetch_assoc($image_result)) {
-        $existing_images[] = $row;
+require_once '../Helpers/ErrorHandler.php';
+require_once '../Service/ProdukService.php';
+require_once '../Service/GambarService.php';
+
+$errors = ErrorHandler::hasErrors() ? $_SESSION['errors'] : [];
+$old = isset($_SESSION['old']) ? $_SESSION['old'] : [];
+unset($_SESSION['old']);
+
+$produkService = new ProdukService();
+$gambarService = new GambarService();
+
+if (isset($_GET['id'])) {
+    $produk_id = intval($_GET['id']);
+    $produk = $produkService->findProductById($produk_id);
+    
+    if (!$produk) {
+        $_SESSION['errors'][] = 'Product not found';
+        header('Location: ?page=ubah-produk');
+        exit;
     }
-} else{
-    $produk = [];
+    
+    // Get existing images using service
+    $existing_images = $gambarService->getAllImagesByProductId($produk_id);
+    if (!$existing_images) {
+        $existing_images = [];
+    }
+} else {
+    $produk = [
+        'produk_id' => '',
+        'nama' => '',
+        'harga' => '',
+        'stok' => '',
+        'deskripsi' => ''
+    ];
     $existing_images = [];
-    $produk['produk_id'] = '';
-    $produk['nama'] = '';
-    $produk['harga'] = '';
-    $produk['stok'] = '';
-    $produk['deskripsi'] = '';
 }
 
+ErrorHandler::displayErrors();
+ErrorHandler::displaySuccess();
 ?>
 <form method="POST" action="../Controller/update_produk.php" enctype="multipart/form-data">
     <input type="hidden" name="produk_id" value="<?php echo $produk['produk_id']; ?>">
@@ -97,7 +103,7 @@ if (isset($_GET['id'])) {
                     <div class="mt-2">
                         
                         <!-- Combined Images Display Area -->
-                        <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4 <?php echo empty($existing_images) ? 'hidden' : ''; ?>"></div>
+                        <div id="all-images" class="grid grid-cols-2 md:grid-cols-3 object-contain lg:grid-cols-4 gap-4 mb-4 <?php echo empty($existing_images) ? 'hidden' : ''; ?>">
                         <!-- Existing images will be shown here -->
                             <?php foreach ($existing_images as $image): ?>
                                 <div class="relative group existing-image" data-image-id="<?php echo $image['gambar_id']; ?>">
@@ -136,16 +142,7 @@ if (isset($_GET['id'])) {
                         </div>
                     </div>
                 </div>
-            <br>
-            <?php if (!empty($errors)): ?>
-                <div class="text-red-500 text-sm/6">
-                    <ul>
-                        <?php foreach ($errors as $error): ?>
-                            <li><?php echo htmlspecialchars($error); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endif; ?>
+            </div>
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">

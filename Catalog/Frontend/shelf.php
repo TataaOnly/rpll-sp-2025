@@ -168,10 +168,9 @@
         }
 
         .footer-left p {
-            font-size: 14px;
+            font-size: 17px;
             line-height: 1.6;
             font-weight: bold;
-            text-transform: uppercase;
             margin: 0;
         }
 
@@ -223,10 +222,12 @@
     </header>
 
     <div class="main">
-        <div class="catalog-title">Katalog Produk</div>
-        <div class="filter-row">
-            <input type="checkbox" id="hide-habis" onclick="toggleHabis()">
-            <label for="hide-habis">Sembunyikan Barang Habis</label>
+        <div class="catalog-title"></div>
+        <div class="button-right">
+            <div class="filter-row">
+                <input type="checkbox" id="hide-habis" onclick="toggleHabis()">
+                <label for="hide-habis">Sembunyikan Barang Habis</label>
+            </div>
         </div>
         <div class="product-grid" id="productGrid">
             <div>Loading...</div>
@@ -238,12 +239,8 @@
             <div class="footer-left">
                 <img src="../../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
                 <p>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                    Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
+                    Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
                 </p>
             </div>
 
@@ -261,56 +258,57 @@
         Copyright &copy; 2025 PlastikHB
     </div>
     <script>
-        let products = [];
-
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            const hideHabis = document.getElementById('hide-habis').checked;
-            grid.innerHTML = '';
-            let found = false;
-            products.forEach(row => {
-                const habis = (parseInt(row.stok) <= 0 || row.status === 'Non-Aktif');
-                if (hideHabis && habis) return;
-                found = true;
-                const card = document.createElement('div');
-                card.className = 'product-card' + (habis ? ' habis' : '');
-                card.setAttribute('data-habis', habis ? '1' : '0');
-                card.style.cursor = 'pointer';
-                card.onclick = function() {
-                    if (habis) {
-                        alert('Produk tidak tersedia atau stok habis.');
-                    } else {
-                        window.location.href = 'details.php?id=' + row.produk_id;
-                    }
-                };
-                // pasang image disini if needed
-                // const img = document.createElement('img');
-                // img.src = row.image_url;
-                // img.alt = row.nama;
-                // card.appendChild(img);
-                const footer = document.createElement('div');
-                footer.className = 'product-footer';
-                footer.textContent = row.nama;
-                card.appendChild(footer);
-                grid.appendChild(card);
-            });
-            if (!found) {
-                grid.innerHTML = '<div>Tidak ada produk.</div>';
+    let products = [];
+    function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        const hideHabis = document.getElementById('hide-habis').checked;
+        grid.innerHTML = '';
+        let found = false;
+        products.forEach(row => {
+            const habis = (parseInt(row.stok) <= 0 || row.status === 'Non-Aktif');
+            if (hideHabis && habis) return;
+            found = true;
+            const card = document.createElement('div');
+            card.className = 'product-card' + (habis ? ' habis' : '');
+            card.setAttribute('data-habis', habis ? '1' : '0');
+            card.style.cursor = 'pointer';
+            card.onclick = function() {
+                if (habis) {
+                    alert('Produk tidak tersedia atau stok habis.');
+                } else {
+                    window.location.href = 'details.php?id=' + row.produk_id;
+                }
+            };
+            // Render rectangular product image from DB (first image)
+            let imgSrc = '../../images/noimg.png';
+            if (Array.isArray(row.images) && row.images.length > 0 && row.images[0].file) {
+                imgSrc = '../../uploads/' + row.images[0].file;
             }
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = row.nama;
+            img.style.width = '100%';
+            img.style.height = '180px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '8px 8px 0 0';
+            card.appendChild(img);
+            const footer = document.createElement('div');
+            footer.className = 'product-footer';
+            footer.textContent = row.nama;
+            card.appendChild(footer);
+            grid.appendChild(card);
+        });
+        if (!found) {
+            grid.innerHTML = '<div>Tidak ada produk.</div>';
         }
-
-        function toggleHabis() {
-            renderProducts();
-        }
-        fetch('../Backend/shelf_controller.php')
-            .then(res => res.json())
-            .then(data => {
-                products = data;
-                renderProducts();
-            })
-            .catch(() => {
-                document.getElementById('productGrid').innerHTML = '<div>Gagal memuat produk.</div>';
-            });
+    }
+    function toggleHabis() {
+        renderProducts();
+    }
+    fetch('../Backend/shelf_controller.php')
+        .then(res => res.json())
+        .then(data => { products = data; renderProducts(); })
+        .catch(() => { document.getElementById('productGrid').innerHTML = '<div>Gagal memuat produk.</div>'; });
     </script>
 </body>
 

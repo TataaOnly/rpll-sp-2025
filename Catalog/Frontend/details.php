@@ -72,23 +72,181 @@
             padding: 32px 32px 20px 32px;
         }
 
-        .detail-container { display: flex; gap: 40px; max-width: 1100px; margin: 0 auto; }
-        .image-section { flex: 1; display: flex; flex-direction: column; align-items: center; }
-        .image-box { width: 300px; height: 250px; border: 1px solid #aaa; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 16px; }
-        .arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 2rem; color: #888; cursor: pointer; user-select: none; }
-        .arrow.left { left: 10px; }
-        .arrow.right { right: 10px; }
-        .image-label { color: #888; font-size: 1.1rem; }
-        .desc-label { margin-top: 16px; font-weight: bold; font-size: 1.1rem; }
-        .desc-box { margin-top: 4px; color: #444; }
-        .info-section { flex: 2; display: flex; flex-direction: column; }
-        .product-title { font-size: 2rem; font-weight: bold; margin-bottom: 8px; }
-        .divider { border: none; border-top: 1px solid #ccc; margin: 8px 0 16px 0; }
-        .info-list { margin-bottom: 32px; }
-        .info-list span { display: block; font-size: 1.1rem; margin-bottom: 8px; }
-        .order-btn { align-self: flex-end; background: #4cd964; color: #fff; border: none; border-radius: 20px; padding: 12px 32px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
-        .order-btn:hover { background: #38b653; }
-                .footer-section {
+        /* Detail page two-column layout */
+        .detail-flex {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        width: 100%;
+        }
+        .detail-left {
+        flex: 1 1 320px;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        }
+        .image-box {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border: 1px solid #bbb;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+        position: relative;
+        }
+        .arrow {
+        font-size: 1.5rem;
+        color: #888;
+        cursor: pointer;
+        user-select: none;
+        margin: 0 8px;
+        }
+        .image-label {
+        flex: 1;
+        text-align: center;
+        color: #444;
+        }
+        .desc-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+        }
+        .desc-box {
+        min-height: 48px;
+        font-size: 1rem;
+        color: #222;
+        background: #fafbfc;
+        border-radius: 4px;
+        padding: 10px 12px;
+        border: 1px solid #eee;
+        }
+        .detail-right {
+        flex: 2 1 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+        }
+        .product-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        }
+        .divider {
+        border: none;
+        border-top: 1px solid #bbb;
+        margin: 8px 0 24px 0;
+        width: 100%;
+        }
+        .info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 1.1rem;
+        margin-bottom: 32px;
+        }
+        .order-btn {
+        background: #4ad97f;
+        color: #222;
+        border: none;
+        border-radius: 16px;
+        padding: 12px 40px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        align-self: flex-end;
+        }
+        .order-btn:hover {
+        background: #36b96a;
+        }
+        /* Responsive page container */
+        .page-container {
+        padding: 0 2vw;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        }
+
+        /* Product grid layout (if needed for details page) */
+        .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 32px;
+        padding: 32px 0;
+        }
+
+        .product-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: box-shadow 0.2s;
+        }
+
+        .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+        }
+
+        .product-footer {
+        padding: 16px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        color: #222;
+        background: #f7faff;
+        }
+
+        button, .main button {
+        background-color: #0056b3;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        width: 200px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 15px;
+        font-weight: bolder;
+        transition: background 0.2s;
+        }
+
+        .button-right {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-bottom: 18px;
+        }
+
+        .button-right button {
+        margin: 0;
+        display: inline-block;
+        }
+
+        button a {
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: bolder;
+        }
+
+        button:hover {
+        background-color: #004494;
+        }
+
+        .footer-section {
             position: relative;
             background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
             color: #fff;
@@ -122,10 +280,9 @@
         }
 
         .footer-left p {
-            font-size: 14px;
+            font-size: 17px;
             line-height: 1.6;
             font-weight: bold;
-            text-transform: uppercase;
             margin: 0;
         }
 
@@ -155,6 +312,7 @@
             font-weight: bold;
         }
 
+
         .filter-row input[type="checkbox"] {
             margin-right: 8px;
             transform: scale(2.5)
@@ -178,6 +336,11 @@
         <div class="detail-container" id="detailContainer">
             <div>Loading...</div>
         </div>
+        <div class="main">
+            <div class="detail-container" id="detailContainer">
+                <div>Loading...</div>
+            </div>
+        </div>
     </div>
     <footer class="footer-section">
       <div class="footer-overlay">
@@ -185,12 +348,8 @@
             <div class="footer-left">
                 <img src="../../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
                 <p>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                    Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
+                    Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
                 </p>
             </div>
 
@@ -215,23 +374,25 @@
     function renderDetail(product) {
         const container = document.getElementById('detailContainer');
         container.innerHTML = `
-            <div class="image-section">
-                <div class="image-box">
-                    <span class="arrow left">&lt;</span>
-                    <span class="image-label">Gambar</span>
-                    <span class="arrow right">&gt;</span>
+            <div class="detail-flex">
+                <div class="detail-left">
+                    <div class="image-box">
+                        <span class="arrow left">&lt;</span>
+                        <span class="image-label">Gambar</span>
+                        <span class="arrow right">&gt;</span>
+                    </div>
+                    <div class="desc-label">Deskripsi</div>
+                    <div class="desc-box">${product.deskripsi ? product.deskripsi : '-'}</div>
                 </div>
-                <div class="desc-label">Deskripsi</div>
-                <div class="desc-box">${product.deskripsi ? product.deskripsi : '-'}</div>
-            </div>
-            <div class="info-section">
-                <div class="product-title">${product.nama}</div>
-                <hr class="divider">
-                <div class="info-list">
-                    <span>Harga: Rp ${parseInt(product.harga).toLocaleString('id-ID')}</span>
-                    <span>Stok: ${product.stok}</span>
+                <div class="detail-right">
+                    <div class="product-title">${product.nama}</div>
+                    <hr class="divider">
+                    <div class="info-list">
+                        <span>Harga: Rp ${parseInt(product.harga).toLocaleString('id-ID')}</span>
+                        <span>Stok: ${product.stok}</span>
+                    </div>
+                    <button class="order-btn">Order Sekarang</button>
                 </div>
-                <button class="order-btn">Order Sekarang</button>
             </div>
         `;
     }

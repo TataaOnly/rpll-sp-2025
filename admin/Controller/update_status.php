@@ -1,26 +1,35 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
-if (!isset($_SESSION['login'])) {
-        header('Location: ../index.php');
-        exit();
-    }   
-include_once '../Model/config.php';
+require_once '../Middleware/AuthMiddleware.php';
+AuthMiddleware::handle();
+
+// UPDATE: Use ErrorHandler and services
+require_once '../Helpers/ErrorHandler.php';
+require_once '../Service/ProdukService.php';
+
+header('Content-Type: application/json');
+
 if ($_POST) {
-    $produk_id = $_POST['produk_id'];
-    $status = $_POST['status'];
+    $produk_id = intval($_POST['produk_id'] ?? 0);
+    $status = $_POST['status'] ?? '';
     
-    $sql = "UPDATE produk SET `status` = ? WHERE produk_id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'si', $status, $produk_id);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
+    if ($produk_id <= 0) {
+        echo json_encode(['success' => false, 'message' => 'Invalid product ID']);
+        exit;
     }
+    
+    if (!in_array($status, ['Aktif', 'Non-Aktif'])) {
+        echo json_encode(['success' => false, 'message' => 'Invalid status']);
+        exit;
+    }
+    
+    $produkService = new ProdukService();
+    
+    if ($produkService->updateProductStatus($produk_id, $status)) {
+        echo json_encode(['success' => true, 'message' => 'Status updated successfully']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to update status']);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-mysqli_close($conn);
 ?>
