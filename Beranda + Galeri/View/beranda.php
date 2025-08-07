@@ -251,7 +251,7 @@
         border: 1px solid #fff;
     }
 
-    .footer-section {
+   .footer-section {
         position: relative;
         background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
         color: #fff;
@@ -284,10 +284,9 @@
     }
 
     .footer-left p {
-        font-size: 14px;
+        font-size: 17px;
         line-height: 1.6;
         font-weight: bold;
-        text-transform: uppercase;
         margin: 0;
     }
 
@@ -348,8 +347,8 @@
     <div class="container">
       <div class="about-us">
         <h2>Tentang Kami</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <button><a href="#">Jelajahi Kami</a></button>
+        <p>PlastikHB adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
+        <button><a href="../../tentangkami/tentangkami.php">Jelajahi Kami</a></button>
       </div>
       <div class="image-container">
         <img src="../images/ATCY2.jpg" alt="Gambar Produk 1">
@@ -446,12 +445,8 @@
             <div class="footer-left">
                 <img src="../../images/logo.png" alt="PlastikHB" class="footer-logo">
                 <p>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                    Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
+                    Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
                 </p>
             </div>
 

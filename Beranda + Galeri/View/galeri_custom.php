@@ -230,7 +230,7 @@
         border: 1px solid #fff;
     }
 
-    .footer-section {
+   .footer-section {
         position: relative;
         background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
         color: #fff;
@@ -263,10 +263,9 @@
     }
 
     .footer-left p {
-        font-size: 14px;
+        font-size: 17px;
         line-height: 1.6;
         font-weight: bold;
-        text-transform: uppercase;
         margin: 0;
     }
 
@@ -446,12 +445,8 @@
             <div class="footer-left">
                 <img src="../../images/logo.png" alt="PlastikHB" class="footer-logo">
                 <p>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.<br>
-                    LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD 
-                    TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+                    Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
+                    Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
                 </p>
             </div>
 
