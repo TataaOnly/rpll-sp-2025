@@ -41,15 +41,15 @@ class ProdukService {
     public function validateProductData($data) {
         $errors = [];
         
-        if (empty($data['nama'])) {
+        if (isset($data['nama']) && empty($data['nama'])) {
             $errors[] = 'Product name is required';
         }
         
-        if (!isset($data['harga']) || $data['harga'] <= 0) {
+        if (isset($data['harga']) && $data['harga'] <= 0) {
             $errors[] = 'Price must be greater than 0';
         }
         
-        if (!isset($data['stok']) || $data['stok'] < 0) {
+        if (isset($data['stok']) && $data['stok'] < 0) {
             $errors[] = 'Stock cannot be negative';
         }
         
