@@ -74,176 +74,176 @@
 
         /* Detail page two-column layout */
         .detail-flex {
-        display: flex;
-        gap: 40px;
-        align-items: flex-start;
-        width: 100%;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            width: 100%;
         }
         .detail-left {
-        flex: 1 1 320px;
-        max-width: 320px;
-        display: flex;
-        flex-direction: column;
+            flex: 1 1 320px;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
         }
         .image-box {
-        width: 100%;
-        aspect-ratio: 1/1;
-        border: 1px solid #bbb;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        margin-bottom: 24px;
-        position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+            position: relative;
         }
         .arrow {
-        font-size: 1.5rem;
-        color: #888;
-        cursor: pointer;
-        user-select: none;
-        margin: 0 8px;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+            user-select: none;
+            margin: 0 8px;
         }
         .image-label {
-        flex: 1;
-        text-align: center;
-        color: #444;
+            flex: 1;
+            text-align: center;
+            color: #444;
         }
         .desc-label {
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin-bottom: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 6px;
         }
         .desc-box {
-        min-height: 48px;
-        font-size: 1rem;
-        color: #222;
-        background: #fafbfc;
-        border-radius: 4px;
-        padding: 10px 12px;
-        border: 1px solid #eee;
+            min-height: 48px;
+            font-size: 1rem;
+            color: #222;
+            background: #fafbfc;
+            border-radius: 4px;
+            padding: 10px 12px;
+            border: 1px solid #eee;
         }
         .detail-right {
-        flex: 2 1 400px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        min-width: 0;
+            flex: 2 1 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 0;
         }
         .product-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
         .divider {
-        border: none;
-        border-top: 1px solid #bbb;
-        margin: 8px 0 24px 0;
-        width: 100%;
+            border: none;
+            border-top: 1px solid #bbb;
+            margin: 8px 0 24px 0;
+            width: 100%;
         }
         .info-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        font-size: 1.1rem;
-        margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
         }
         .order-btn {
-        background: #4ad97f;
-        color: #222;
-        border: none;
-        border-radius: 16px;
-        padding: 12px 40px;
-        font-size: 1.2rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-        align-self: flex-end;
+            background: #4ad97f;
+            color: #222;
+            border: none;
+            border-radius: 16px;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-end;
         }
         .order-btn:hover {
-        background: #36b96a;
+            background: #36b96a;
         }
         /* Responsive page container */
         .page-container {
-        padding: 0 2vw;
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+            padding: 0 2vw;
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Product grid layout (if needed for details page) */
         .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 32px;
-        padding: 32px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 32px;
+            padding: 32px 0;
         }
 
         .product-card {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: box-shadow 0.2s;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s;
         }
 
         .product-card img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 8px 8px 0 0;
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
         }
 
         .product-footer {
-        padding: 16px;
-        font-weight: bold;
-        text-align: center;
-        width: 100%;
-        color: #222;
-        background: #f7faff;
+            padding: 16px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            color: #222;
+            background: #f7faff;
         }
 
         button, .main button {
-        background-color: #0056b3;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        width: 200px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 15px;
-        font-weight: bolder;
-        transition: background 0.2s;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 200px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 15px;
+            font-weight: bolder;
+            transition: background 0.2s;
         }
 
         .button-right {
-        margin-top: 20px;
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        margin-bottom: 18px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-bottom: 18px;
         }
 
         .button-right button {
-        margin: 0;
-        display: inline-block;
+            margin: 0;
+            display: inline-block;
         }
 
         button a {
-        color: white;
-        text-decoration: none;
-        font-size: 15px;
-        font-weight: bolder;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bolder;
         }
 
         button:hover {
-        background-color: #004494;
+            background-color: #004494;
         }
 
         .footer-section {
@@ -325,10 +325,10 @@
             <div class="logo"><a href="../../Beranda + Galeri/View/beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
             <div class="nav-links">
                 <a href="../../Beranda + Galeri/View/beranda.php">Beranda</a>
-                <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
+                <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
                 <a href="shelf.php">Katalog Produk</a>
                 <a href="../../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
-                <a href="../../hubungikami.php">Hubungi Kami</a>
+                <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
             </div>
         </nav>
     </header>
