@@ -70,7 +70,10 @@
         }
 
         .main {
-            padding: 32px 32px 20px 32px;
+            flex: 1 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding-bottom: 32px;
         }
 
         .catalog-title {
@@ -85,36 +88,87 @@
             align-items: center;
             justify-content: flex-end;
             margin-bottom: 16px;
+            margin-right: 50px;
             gap: 8px;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 32px;
-            max-width: 900px;
-            margin: 0 auto 32px auto;
+            padding: 32px 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 30px;
+            margin: 20px 50px;
+            box-shadow: 0 2px 8px rgba(41,170,252,0.06);
+            min-height: 200px;
         }
 
         .product-card {
             background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            min-height: 180px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            align-items: center;
+            transition: box-shadow 0.2s;
+        }
+
+        .product-card, .product {
+            background-color: #f2f2f2;
+            text-align: center;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.2s;
             position: relative;
             overflow: hidden;
         }
 
-        .product-card .product-footer {
+        .product-card:hover, .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(41,170,252,0.12);
+        }
+
+        .product-card .product-footer, .product .product-footer {
             background: #29aafc;
             color: #fff;
             text-align: center;
             padding: 12px 0;
             font-weight: 500;
             border-top: 1px solid #eee;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .product img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .product img:hover {
+            opacity: 0.8;
+        }
+
+        .hidden-product {
+            display: none;
+        }
+
+        .product-card.habis, .product.habis {
+            background: #f0f0f0;
+            border: 1.5px solid #e0eaf3;
         }
 
         .product-card.habis {
@@ -134,6 +188,20 @@
             pointer-events: none;
         }
 
+        .product-footer {
+            padding: 16px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            color: #222;
+            background: #f7faff;
+        }
+
+        .product-section {
+            text-align: center;
+            padding: 20px;
+        }
+
         .footer-section {
             position: relative;
             background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
@@ -143,7 +211,6 @@
 
         .footer-overlay {
             background-color: rgba(148, 163, 248, 0.8);
-            /* Warna ungu transparan */
             padding: 60px 60px;
         }
 
@@ -162,7 +229,6 @@
 
         .footer-left .footer-logo {
             max-width: 200px;
-            /* margin-bottom: 15px; */
             margin: 20px 0;
             height: 100%;
         }
@@ -193,7 +259,6 @@
 
         .footer-bottom {
             background-color: #0056b3;
-            /* biru */
             text-align: center;
             padding: 15px 0;
             font-size: 18px;
@@ -204,6 +269,39 @@
             margin-right: 8px;
             transform: scale(2.5)
         }
+
+        @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        }
+
+        @keyframes slideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        }
+
+        @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        }
     </style>
 </head>
 
@@ -213,10 +311,10 @@
             <div class="logo"><a href="../../Beranda + Galeri/View/beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
             <div class="nav-links">
                 <a href="../../Beranda + Galeri/View/beranda.php">Beranda</a>
-                <a href="../../tentangkami/View/tentangkami.php">Tentang Kami</a>
+                <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
                 <a href="shelf.php">Katalog Produk</a>
                 <a href="../../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
-                <a href="../../hubungikami.php">Hubungi Kami</a>
+                <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
             </div>
         </nav>
     </header>
@@ -309,7 +407,39 @@
         .then(res => res.json())
         .then(data => { products = data; renderProducts(); })
         .catch(() => { document.getElementById('productGrid').innerHTML = '<div>Gagal memuat produk.</div>'; });
+    
+    // Scroll Driven Animation for Product Grid
+    const productGrid = document.querySelector('.product-grid');
+    const plastic_products = document.querySelectorAll('.product-card');
+
+    window.addEventListener('scroll', () => {
+    const gridTop = productGrid.getBoundingClientRect().top;
+    const gridBottom = productGrid.getBoundingClientRect().bottom;
+
+    plastic_products.forEach((product, index) => {
+        const productTop = product.getBoundingClientRect().top;
+
+        if (productTop < window.innerHeight && productTop > 0) {
+        product.style.animation = `slideIn 0.5s ease ${index * 0.1}s forwards`;
+        } else {
+        product.style.animation = 'none';
+        }
+    });
+    });
+    
+    // Scroll Driven Animation for Footer
+    const footer = document.querySelector('.footer-section');
+
+    window.addEventListener('scroll', () => {
+        const footerTop = footer.getBoundingClientRect().top;
+        const footerBottom = footer.getBoundingClientRect().bottom;
+
+        if (footerTop < window.innerHeight && footerBottom > 0) {
+        footer.style.animation = 'fadeIn 1s ease forwards';
+        } else {
+        footer.style.animation = 'none';
+        }
+    });
     </script>
 </body>
-
 </html>

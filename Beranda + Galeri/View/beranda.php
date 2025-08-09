@@ -82,12 +82,9 @@
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 30px;
       margin: 20px 50px;
-      /* padding: 20px; */
     }
 
     .product-grid .product {
-      /* background-color: #f2f2f2; */
-      /* padding: 60px 10px; */
       text-align: center;
       transition: transform 0.3s ease;
     }
@@ -108,7 +105,6 @@
         object-fit: cover;
         border-radius: 8px;
         transition: opacity 0.3s ease;
-        /* border: 1px solid black; */
     }
 
     .product img:hover {
@@ -179,7 +175,6 @@
 
     .slider{
         width: 100%;
-        /* border: 1px solid red; */
         height: var(--height); 
         overflow: hidden;
         mask-image: linear-gradient(
@@ -315,6 +310,7 @@
         font-weight: bold;
     }
 
+
     @keyframes carousel {
         0% { transform: translateX(0); }
         100% { transform: translateX(-75%); }
@@ -326,6 +322,17 @@
         }to{
             left: calc(var(--width) * -1 );
         }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -347,13 +354,13 @@
     <div class="container">
       <div class="about-us">
         <h2>Tentang Kami</h2>
-        <p>PlastikHB adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
+        <p><b>PlastikHB</b> adalah produsen plastik kemasan yang berdiri sejak 2012 di Bandung, dengan fokus awal pada kebutuhan usaha mikro dan kecil di Jawa Barat. Seiring waktu, perusahaan terus berkembang, memperluas kapasitas produksi, dan melakukan diversifikasi produk seperti plastik vakum dan standing pouch. Kini, produk telah menjangkau pasar nasional dan didukung layanan custom printing serta sistem produksi modern yang menerapkan kontrol kualitas dan prinsip keberlanjutan.</p>
         <button><a href="../../tentangkami/tentangkami.php">Jelajahi Kami</a></button>
       </div>
       <div class="image-container">
-        <img src="../images/ATCY2.jpg" alt="Gambar Produk 1">
-        <img src="../images/ATCY3.jpg" alt="Gambar Produk 2">
-        <img src="../images/ATCY4.jpg" alt="Gambar Produk 3">
+        <img src="../../images/pabrikPlastikHB3.jpg" alt="Gambar Produk 1">
+        <img src="../../images/pabrikPlastikHB4.jpg" alt="Gambar Produk 2">
+        <img src="../../images/pabrikPlastikHB5.jpg" alt="Gambar Produk 3">
         <div class="dot-container">
           <div class="dot active" onclick="showImage(0)"></div>
           <div class="dot" onclick="showImage(1)"></div>
@@ -372,16 +379,16 @@
         --quantity: 10;
       ">
         <div class="list">
-          <div class="item" style="--position: 1"><img src="../images/BMW-M_logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 2"><img src="../images/DHL_logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 3"><img src="../images/EstrellaGalicia_Logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 4"><img src="../images/MICHELIN_logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 5"><img src="../images/sponsor-qatar.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 6"><img src="../images/Tissot_Main_Sponsor.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 7"><img src="../images/DHL_logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 8"><img src="../images/EstrellaGalicia_Logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 9"><img src="../images/MICHELIN_logo.webp" alt="Gambar Produk 1"></div>
-          <div class="item" style="--position: 10"><img src="../images/sponsor-qatar.webp" alt="Gambar Produk 1"></div>    
+          <div class="item" style="--position: 1"><img src="../images/borma.jpg" alt="Gambar Produk 1"></div>
+          <div class="item" style="--position: 2"><img src="../images/yogya.png" alt="Gambar Produk 2"></div>
+          <div class="item" style="--position: 3"><img src="../images/aquviva.webp" alt="Gambar Produk 3"></div>
+          <div class="item" style="--position: 4"><img src="../images/sidomuncul.png" alt="Gambar Produk 4"></div>
+          <div class="item" style="--position: 5"><img src="../images/wedrink.jpg" alt="Gambar Produk 5"></div>
+          <div class="item" style="--position: 6"><img src="../images/alfamart.png" alt="Gambar Produk 6"></div>
+          <div class="item" style="--position: 7"><img src="../images/aoka.jpg" alt="Gambar Produk 7"></div>
+          <div class="item" style="--position: 8"><img src="../images/SoSoft.webp" alt="Gambar Produk 8"></div>
+          <div class="item" style="--position: 9"><img src="../images/phd.jpg" alt="Gambar Produk 9"></div>
+          <div class="item" style="--position: 10"><img src="../images/yakult.png" alt="Gambar Produk 10"></div>    
         </div>
       </div> 
     </div>
@@ -489,5 +496,51 @@
         Copyright &copy; 2025 PlastikHB
     </div>
   </footer>
+
+  <script>
+    // Scroll Driven Animation for Product Grid
+    const productGrid = document.querySelector('.product-grid');
+    const products = document.querySelectorAll('.product');
+
+    let prevScrollPos = window.pageYOffset;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollPos = window.pageYOffset;
+      const gridTop = productGrid.getBoundingClientRect().top;
+      const gridBottom = productGrid.getBoundingClientRect().bottom;
+
+      if (currentScrollPos > prevScrollPos) { // Scrolling down
+        products.forEach((product, index) => {
+          const productTop = product.getBoundingClientRect().top;
+
+          if (productTop < window.innerHeight && productTop > 0) {
+            product.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
+          } else {
+            product.style.animation = 'none';
+          }
+        });
+      } else { // Scrolling up
+        products.forEach((product) => {
+          product.style.animation = 'none';
+        });
+      }
+
+      prevScrollPos = currentScrollPos;
+    });
+
+    // Scroll Driven Animation for Footer
+    const footer = document.querySelector('.footer-section');
+
+    window.addEventListener('scroll', () => {
+      const footerTop = footer.getBoundingClientRect().top;
+      const footerBottom = footer.getBoundingClientRect().bottom;
+
+      if (footerTop < window.innerHeight && footerBottom > 0) {
+        footer.style.animation = 'fadeIn 1s ease forwards';
+      } else {
+        footer.style.animation = 'none';
+      }
+    });
+  </script>
 </body>
 </html>

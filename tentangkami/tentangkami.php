@@ -94,7 +94,6 @@
       padding-right: 20px;
       display: flex;
       flex-direction: column;
-      /* justify-content: center; */
     }
 
     .sejarah-title p {
@@ -107,13 +106,12 @@
       width: 1px;
       background-color: #444;
       margin: 0 20px;
-      height: 200px; /* ← Ubah sesuai kebutuhan */
+      height: 200px; 
     }
 
     .sejarah-content {
       flex: 3;
       padding-left: 30px;
-      /* border-left: 1px solid #444; */
     }
 
     .sejarah-content p {
@@ -167,7 +165,6 @@
       padding: 50px 100px;
       border-left: 1px solid #ccc;
       border-right: 1px solid #ccc;
-      /* min-width: 80%; */
     }
 
     .visi-misi-wrapper {
@@ -273,7 +270,7 @@
     }
 
     .footer-overlay {
-        background-color: rgba(148, 163, 248, 0.8); /* Warna ungu transparan */
+        background-color: rgba(148, 163, 248, 0.8);
         padding: 60px 60px;
     }
 
@@ -283,7 +280,7 @@
         align-items: flex-start;
         max-width: 1200px;
         margin: 0 auto;
-        color: black; /* sesuai gambar */
+        color: black; 
     }
 
     .footer-left {
@@ -292,7 +289,6 @@
 
     .footer-left .footer-logo {
         max-width: 200px;
-        /* margin-bottom: 15px; */
         margin: 20px 0;
         height: 100%;
     }
@@ -322,11 +318,22 @@
     }
 
     .footer-bottom {
-        background-color: #0056b3; /* biru */
+        background-color: #0056b3;
         text-align: center;
         padding: 15px 0;
         font-size: 18px;
         font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -508,6 +515,20 @@
   });
 
   fadeEls.forEach(el => observer.observe(el));
+
+  // Scroll Driven Animation for Footer
+  const footer = document.querySelector('.footer-section');
+
+  window.addEventListener('scroll', () => {
+    const footerTop = footer.getBoundingClientRect().top;
+    const footerBottom = footer.getBoundingClientRect().bottom;
+
+    if (footerTop < window.innerHeight && footerBottom > 0) {
+      footer.style.animation = 'fadeIn 1s ease forwards';
+    } else {
+      footer.style.animation = 'none';
+    }
+  });
   </script>
 </body>
 </html>
