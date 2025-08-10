@@ -373,13 +373,21 @@
     }
     function renderDetail(product) {
         const container = document.getElementById('detailContainer');
+        let images = Array.isArray(product.images) && product.images.length ? product.images : ['../../images/noimg.png'];
+        let imgIndex = 0;
+        function getImgSrc(idx) {
+            let file = images[idx];
+            if (file.startsWith('..')) return file;
+            if (file.startsWith('/')) return file;
+            return '../../uploads/' + file;
+        }
         container.innerHTML = `
             <div class="detail-flex">
                 <div class="detail-left">
-                    <div class="image-box">
-                        <span class="arrow left">&lt;</span>
-                        <span class="image-label">Gambar</span>
-                        <span class="arrow right">&gt;</span>
+                    <div class="image-box" id="imgBox">
+                        <span class="arrow left" id="imgPrev">&lt;</span>
+                        <img src="${getImgSrc(0)}" alt="Gambar Produk" id="detailImg" style="max-width:90%;max-height:90%;object-fit:contain;">
+                        <span class="arrow right" id="imgNext">&gt;</span>
                     </div>
                     <div class="desc-label">Deskripsi</div>
                     <div class="desc-box">${product.deskripsi ? product.deskripsi : '-'}</div>
@@ -395,6 +403,16 @@
                 </div>
             </div>
         `;
+        // Slider logic
+        const imgEl = document.getElementById('detailImg');
+        document.getElementById('imgPrev').onclick = () => {
+            imgIndex = (imgIndex - 1 + images.length) % images.length;
+            imgEl.src = getImgSrc(imgIndex);
+        };
+        document.getElementById('imgNext').onclick = () => {
+            imgIndex = (imgIndex + 1) % images.length;
+            imgEl.src = getImgSrc(imgIndex);
+        };
     }
     function renderError(msg) {
         document.getElementById('detailContainer').innerHTML = `<div style="color:red;">${msg}</div>`;
