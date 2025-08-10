@@ -163,6 +163,9 @@
         .order-btn:hover {
             background: #36b96a;
         }
+        .order-link {
+            align-self: flex-end;
+        }
         /* Responsive page container */
         .page-container {
             padding: 0 2vw;
@@ -336,17 +339,12 @@
         <div class="detail-container" id="detailContainer">
             <div>Loading...</div>
         </div>
-        <div class="main">
-            <div class="detail-container" id="detailContainer">
-                <div>Loading...</div>
-            </div>
-        </div>
     </div>
     <footer class="footer-section">
       <div class="footer-overlay">
         <div class="footer-content">
             <div class="footer-left">
-                <img src="../../images/logoBaru.png" alt="PlastikHB" class="footer-logo">
+                <img src="../../images/logo.png" alt="PlastikHB" class="footer-logo">
                 <p>
                     Melayani dengan kualitas, tumbuh dengan kepercayaan, dan bergerak untuk masa depan yang lebih hijau.<br>
                     Kami percaya bahwa industri plastik masa depan harus berkelanjutan. Setiap produk kami adalah langkah kecil menuju bumi yang lebih bersih dan sehat.
@@ -355,10 +353,35 @@
 
             <div class="footer-right">
                 <h3>Hubungi kami</h3>
-                <p>Jl. lorem ipsum blablabal No. 111,<br>Bandung 40111
-                <br>+62 11 1111111 (phone)
-                <br>+62 22 2222222 (WhatsApp)
-                <br>loremipsum@gmail.com</p>
+                <?php
+                require_once __DIR__ . '/../../admin/Helpers/KontakHelper.php';
+                $kontak = KontakHelper::getKontak();
+                if (!$kontak) {
+                    // Default contact data as fallback
+                    $kontak = [
+                        'nama' => 'PlastikHB Admin',
+                        'email' => 'admin@plastikhb.com',
+                        'no_telp' => '081234567890',
+                        'no_wa' => '081234567890',
+                        'map' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0104676903975!2d107.6160988!3d-6.889348799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e655d336aaab%3A0xc48b605e8e3d2915!2sInstitut%20Teknologi%20Harapan%20Bangsa!5e0!3m2!1sen!2sid!4v1753878291876!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+                        'alamat' => 'Alamat Toko Plastik',
+                    ];
+                }
+                
+                // Ensure all required fields exist with safe defaults
+                $kontak = array_merge([
+                    'nama' => 'PlastikHB',
+                    'email' => 'info@plastikhb.com',
+                    'no_telp' => 'Tidak tersedia',
+                    'no_wa' => 'Tidak tersedia',
+                    'alamat' => 'Alamat belum diatur',
+                    'map' => '<p>Peta belum tersedia</p>'
+                ], $kontak);
+                ?>
+                <p><?php echo htmlspecialchars($kontak['alamat']); ?>
+                <br><?php echo htmlspecialchars($kontak['no_telp']); ?> (phone)
+                <br><?php echo htmlspecialchars($kontak['no_wa']); ?> (WhatsApp)
+                <br><?php echo htmlspecialchars($kontak['email']); ?></p>
             </div>
         </div>
     </div>
@@ -366,6 +389,7 @@
     <div class="footer-bottom">
         Copyright &copy; 2025 PlastikHB
     </div>
+  </footer>
     <script>
     function getQueryParam(name) {
         const url = new URL(window.location.href);
@@ -399,7 +423,7 @@
                         <span>Harga: Rp ${parseInt(product.harga).toLocaleString('id-ID')}</span>
                         <span>Stok: ${product.stok}</span>
                     </div>
-                    <button class="order-btn">Order Sekarang</button>
+                   <a class="order-link" href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $kontak['no_wa']); ?>"><button class="order-btn">Order Sekarang</button></a>
                 </div>
             </div>
         `;
