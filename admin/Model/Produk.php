@@ -87,23 +87,17 @@ class Produk {
 
     public function update($id, $data) {
         $setParts = [];
-        $types = '';
         $values = [];
 
         foreach ($data as $key => $value) {
             if (in_array($key, $this->columns)) {
-                $setParts[] = "{$key} = ?";
-                
-                // Fix: Better type detection
+                // Fix: Better type detection and safe value handling
                 if (is_int($value) || ($key === 'stok' && is_numeric($value))) {
-                    $types .= 'i';
-                    $values[] = (int)$value; // Ensure it's an integer
+                    $setParts[] = "{$key} = " . (int)$value;
                 } elseif (is_float($value) || ($key === 'harga' && is_numeric($value))) {
-                    $types .= 'd';
-                    $values[] = (float)$value; // Ensure it's a float
+                    $setParts[] = "{$key} = " . (float)$value;
                 } else {
-                    $types .= 's';
-                    $values[] = (string)$value; // Ensure it's a string
+                    $setParts[] = "{$key} = '" . $this->conn->real_escape_string((string)$value) . "'";
                 }
             }
         }
@@ -112,45 +106,28 @@ class Produk {
             return false; // No valid fields to update
         }
 
-        $types .= 'i'; // Add type for id
-        $values[] = (int)$id; // Ensure ID is integer
-
         $setQuery = implode(', ', $setParts);
-        $stmt = $this->conn->prepare("UPDATE {$this->table} SET {$setQuery} WHERE produk_id = ?");
+        $query = "UPDATE {$this->table} SET {$setQuery} WHERE produk_id = " . (int)$id;
         
-        // Fix: Add error handling
-        if (!$stmt) {
-            return false;
-        }
-        
-        $stmt->bind_param($types, ...$values);
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
+        return $this->conn->query($query) !== false;
     }
 
     public function create($data) {
         $fields = [];
-        $placeholders = [];
-        $types = '';
         $values = [];
 
         foreach ($data as $key => $value) {
             // Fix: Exclude auto-increment ID field
             if (in_array($key, $this->columns) && $key !== 'produk_id') {
                 $fields[] = $key;
-                $placeholders[] = '?';
                 
-                // Fix: Better type detection (same as update)
+                // Fix: Better type detection and safe value handling
                 if (is_int($value) || ($key === 'stok' && is_numeric($value))) {
-                    $types .= 'i';
                     $values[] = (int)$value;
                 } elseif (is_float($value) || ($key === 'harga' && is_numeric($value))) {
-                    $types .= 'd';
                     $values[] = (float)$value;
                 } else {
-                    $types .= 's';
-                    $values[] = (string)$value;
+                    $values[] = "'" . $this->conn->real_escape_string((string)$value) . "'";
                 }
             }
         }
@@ -160,33 +137,19 @@ class Produk {
         }
 
         $fieldsQuery = implode(', ', $fields);
-        $placeholdersQuery = implode(', ', $placeholders);
+        $valuesQuery = implode(', ', $values);
 
-        $stmt = $this->conn->prepare("INSERT INTO {$this->table} ({$fieldsQuery}) VALUES ({$placeholdersQuery})");
+        $query = "INSERT INTO {$this->table} ({$fieldsQuery}) VALUES ({$valuesQuery})";
         
-        if (!$stmt) {
-            return false;
+        if ($this->conn->query($query)) {
+            return $this->conn->insert_id;
         }
-        
-        $stmt->bind_param($types, ...$values);
-        $result = $stmt->execute();
-        $insertedId = $this->conn->insert_id;
-        $stmt->close();
-
-        return $result ? $insertedId : false;
+        return false;
     }
 
     public function delete($id) {
-        $stmt = $this->conn->prepare("DELETE FROM {$this->table} WHERE produk_id = ?");
-        
-        if (!$stmt) {
-            return false; // Prepare failed
-        }
-        
-        $stmt->bind_param("i", (int)$id); // Fix: Ensure ID is integer
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
+        $query = "DELETE FROM {$this->table} WHERE produk_id = " . (int)$id;
+        return $this->conn->query($query) !== false;
     }
 
     public function getColumns() {

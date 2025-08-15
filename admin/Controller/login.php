@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once '../Helpers/ErrorHandler.php';
-require_once '../Helpers/KontakHelper.php';
+require_once __DIR__ . '/../Helpers/ErrorHandler.php';
+require_once __DIR__ . '/../Helpers/KontakHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
