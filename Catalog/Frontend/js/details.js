@@ -11,7 +11,7 @@ function renderDetail(product) {
         let file = images[idx];
         if (file.startsWith('..')) return file;
         if (file.startsWith('/')) return file;
-        return '../../../uploads/' + file;
+        return '../../uploads/' + file;
     }
     container.innerHTML = `
         <div class="detail-flex">
