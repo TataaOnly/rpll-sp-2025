@@ -1,10 +1,10 @@
 <?php
-require_once '../Middleware/AuthMiddleware.php';
+require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
 AuthMiddleware::handle(); 
 
-require_once '../Helpers/ErrorHandler.php';
-require_once '../Service/ProdukService.php';
-require_once '../Service/GambarService.php';
+require_once __DIR__ . '/../Helpers/ErrorHandler.php';
+require_once __DIR__ . '/../Service/ProdukService.php';
+require_once __DIR__ . '/../Service/GambarService.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Initialize services

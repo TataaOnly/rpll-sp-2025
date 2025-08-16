@@ -33,9 +33,18 @@ if ($result && $result->num_rows > 0) {
         }
     }
     $row['images'] = $images;
+
+    $nowasql = "SELECT no_wa FROM kontak LIMIT 1";
+    $result = $conn->query($nowasql);
+    if ($result && $result->num_rows > 0) {
+        $no_wa = $result->fetch_assoc()['no_wa'];
+    }
+    $row['no_wa'] = $no_wa;
+
     echo json_encode($row);
 } else {
     http_response_code(404);
     echo json_encode(['error' => 'Produk tidak ditemukan']);
 }
+
 $conn->close();

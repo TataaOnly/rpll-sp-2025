@@ -11,7 +11,7 @@ function renderDetail(product) {
         let file = images[idx];
         if (file.startsWith('..')) return file;
         if (file.startsWith('/')) return file;
-        return '../../../uploads/' + file;
+        return '../../uploads/' + file;
     }
     container.innerHTML = `
         <div class="detail-flex">
@@ -31,7 +31,7 @@ function renderDetail(product) {
                     <span>Harga: Rp ${parseInt(product.harga).toLocaleString('id-ID')}</span>
                     <span>Stok: ${product.stok}</span>
                 </div>
-                <a class="order-link" href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $kontak['no_wa']); ?>"><button class="order-btn">Order Sekarang</button></a>
+                <a class="order-link" href="https://wa.me/${product.no_wa}"><button class="order-btn">Order Sekarang</button></a>
             </div>
         </div>
     `;

@@ -3,3 +3,6 @@ admin/Model/kontakscript.php
 # Upload directories - ignore contents but keep folder
 uploads/*
 !uploads/.gitkeep
+vendor/
+.phpunit.result.cache
+coverage/
