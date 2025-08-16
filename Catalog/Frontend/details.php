@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Produk | PlastikHB</title>
+    <link rel="icon" type="image/png" href="../../images/icon.png">
+    <!-- <link rel="stylesheet" href="css/details.css"> -->
+    <script src="js/details.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,19 +75,20 @@
             padding: 32px 32px 20px 32px;
         }
 
-        /* Detail page two-column layout */
         .detail-flex {
             display: flex;
             gap: 40px;
             align-items: flex-start;
             width: 100%;
         }
+
         .detail-left {
             flex: 1 1 320px;
             max-width: 320px;
             display: flex;
             flex-direction: column;
         }
+
         .image-box {
             width: 100%;
             aspect-ratio: 1/1;
@@ -97,6 +101,7 @@
             margin-bottom: 24px;
             position: relative;
         }
+
         .arrow {
             font-size: 1.5rem;
             color: #888;
@@ -104,16 +109,19 @@
             user-select: none;
             margin: 0 8px;
         }
+
         .image-label {
             flex: 1;
             text-align: center;
             color: #444;
         }
+
         .desc-label {
             font-size: 1.1rem;
             font-weight: 500;
             margin-bottom: 6px;
         }
+
         .desc-box {
             min-height: 48px;
             font-size: 1rem;
@@ -123,6 +131,7 @@
             padding: 10px 12px;
             border: 1px solid #eee;
         }
+
         .detail-right {
             flex: 2 1 400px;
             display: flex;
@@ -130,17 +139,20 @@
             align-items: flex-start;
             min-width: 0;
         }
+
         .product-title {
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 8px;
         }
+
         .divider {
             border: none;
             border-top: 1px solid #bbb;
             margin: 8px 0 24px 0;
             width: 100%;
         }
+
         .info-list {
             display: flex;
             flex-direction: column;
@@ -148,6 +160,7 @@
             font-size: 1.1rem;
             margin-bottom: 32px;
         }
+
         .order-btn {
             background: #4ad97f;
             color: #222;
@@ -160,13 +173,15 @@
             transition: background 0.2s;
             align-self: flex-end;
         }
+
         .order-btn:hover {
             background: #36b96a;
         }
+
         .order-link {
             align-self: flex-end;
         }
-        /* Responsive page container */
+    
         .page-container {
             padding: 0 2vw;
             width: 100%;
@@ -176,7 +191,6 @@
             flex-direction: column;
         }
 
-        /* Product grid layout (if needed for details page) */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -258,7 +272,6 @@
 
         .footer-overlay {
             background-color: rgba(148, 163, 248, 0.8);
-            /* Warna ungu transparan */
             padding: 60px 60px;
         }
 
@@ -277,7 +290,6 @@
 
         .footer-left .footer-logo {
             max-width: 200px;
-            /* margin-bottom: 15px; */
             margin: 20px 0;
             height: 100%;
         }
@@ -308,7 +320,6 @@
 
         .footer-bottom {
             background-color: #0056b3;
-            /* biru */
             text-align: center;
             padding: 15px 0;
             font-size: 18px;
@@ -325,21 +336,27 @@
 <body>
     <header>
         <nav>
-            <div class="logo"><a href="../../Beranda + Galeri/View/beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
+            <div class="logo"><a href="../../Beranda/Frontend/beranda.php"><img src="../../images/logoBaru.png" alt=""></a></div>
             <div class="nav-links">
-                <a href="../../Beranda + Galeri/View/beranda.php">Beranda</a>
-                <a href="../../tentangkami/tentangkami.php">Tentang Kami</a>
+                <a href="../../Beranda/Frontend/beranda.php">Beranda</a>
+                <a href="../../tentangkami/Frontend/tentangkami.php">Tentang Kami</a>
                 <a href="shelf.php">Katalog Produk</a>
-                <a href="../../Beranda + Galeri/View/galeri_custom.php">Galeri Custom</a>
-                <a href="../../hubungikami/hubungikami.php">Hubungi Kami</a>
+                <a href="../../Galeri/Frontend/galeri_custom.php">Galeri Custom</a>
+                <a href="../../hubungikami/Frontend/hubungikami.php">Hubungi Kami</a>
             </div>
         </nav>
     </header>
+
+    <?php
+        $kontak = include __DIR__ . '/../../getAllContact.php';
+    ?>
+
     <div class="main">
         <div class="detail-container" id="detailContainer">
             <div>Loading...</div>
         </div>
     </div>
+
     <footer class="footer-section">
       <div class="footer-overlay">
         <div class="footer-content">
@@ -353,31 +370,6 @@
 
             <div class="footer-right">
                 <h3>Hubungi kami</h3>
-                <?php
-                require_once __DIR__ . '/../../admin/Helpers/KontakHelper.php';
-                $kontak = KontakHelper::getKontak();
-                if (!$kontak) {
-                    // Default contact data as fallback
-                    $kontak = [
-                        'nama' => 'PlastikHB Admin',
-                        'email' => 'admin@plastikhb.com',
-                        'no_telp' => '081234567890',
-                        'no_wa' => '081234567890',
-                        'map' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0104676903975!2d107.6160988!3d-6.889348799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e655d336aaab%3A0xc48b605e8e3d2915!2sInstitut%20Teknologi%20Harapan%20Bangsa!5e0!3m2!1sen!2sid!4v1753878291876!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
-                        'alamat' => 'Alamat Toko Plastik',
-                    ];
-                }
-                
-                // Ensure all required fields exist with safe defaults
-                $kontak = array_merge([
-                    'nama' => 'PlastikHB',
-                    'email' => 'info@plastikhb.com',
-                    'no_telp' => 'Tidak tersedia',
-                    'no_wa' => 'Tidak tersedia',
-                    'alamat' => 'Alamat belum diatur',
-                    'map' => '<p>Peta belum tersedia</p>'
-                ], $kontak);
-                ?>
                 <p><?php echo htmlspecialchars($kontak['alamat']); ?>
                 <br><?php echo htmlspecialchars($kontak['no_telp']); ?> (phone)
                 <br><?php echo htmlspecialchars($kontak['no_wa']); ?> (WhatsApp)
@@ -390,69 +382,5 @@
         Copyright &copy; 2025 PlastikHB
     </div>
   </footer>
-    <script>
-    function getQueryParam(name) {
-        const url = new URL(window.location.href);
-        return url.searchParams.get(name);
-    }
-    function renderDetail(product) {
-        const container = document.getElementById('detailContainer');
-        let images = Array.isArray(product.images) && product.images.length ? product.images : ['../../images/noimg.png'];
-        let imgIndex = 0;
-        function getImgSrc(idx) {
-            let file = images[idx];
-            if (file.startsWith('..')) return file;
-            if (file.startsWith('/')) return file;
-            return '../../uploads/' + file;
-        }
-        container.innerHTML = `
-            <div class="detail-flex">
-                <div class="detail-left">
-                    <div class="image-box" id="imgBox">
-                        <span class="arrow left" id="imgPrev">&lt;</span>
-                        <img src="${getImgSrc(0)}" alt="Gambar Produk" id="detailImg" style="max-width:90%;max-height:90%;object-fit:contain;">
-                        <span class="arrow right" id="imgNext">&gt;</span>
-                    </div>
-                    <div class="desc-label">Deskripsi</div>
-                    <div class="desc-box">${product.deskripsi ? product.deskripsi : '-'}</div>
-                </div>
-                <div class="detail-right">
-                    <div class="product-title">${product.nama}</div>
-                    <hr class="divider">
-                    <div class="info-list">
-                        <span>Harga: Rp ${parseInt(product.harga).toLocaleString('id-ID')}</span>
-                        <span>Stok: ${product.stok}</span>
-                    </div>
-                   <a class="order-link" href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $kontak['no_wa']); ?>"><button class="order-btn">Order Sekarang</button></a>
-                </div>
-            </div>
-        `;
-        // Slider logic
-        const imgEl = document.getElementById('detailImg');
-        document.getElementById('imgPrev').onclick = () => {
-            imgIndex = (imgIndex - 1 + images.length) % images.length;
-            imgEl.src = getImgSrc(imgIndex);
-        };
-        document.getElementById('imgNext').onclick = () => {
-            imgIndex = (imgIndex + 1) % images.length;
-            imgEl.src = getImgSrc(imgIndex);
-        };
-    }
-    function renderError(msg) {
-        document.getElementById('detailContainer').innerHTML = `<div style="color:red;">${msg}</div>`;
-    }
-    const id = getQueryParam('id');
-    if (!id) {
-        renderError('ID produk tidak ditemukan di URL.');
-    } else {
-        fetch('../Backend/detail_controller.php?id=' + encodeURIComponent(id))
-            .then(res => res.json())
-            .then(data => {
-                if (data && !data.error) renderDetail(data);
-                else renderError(data.error || 'Produk tidak ditemukan.');
-            })
-            .catch(() => renderError('Gagal memuat detail produk.'));
-    }
-    </script>
 </body>
 </html>
