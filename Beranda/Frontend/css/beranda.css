@@ -26,109 +26,86 @@ nav {
     margin: 0;
 }
 
-nav a {
+.nav-links a {
     color: #fff;
     text-decoration: none;
     padding: 0 5px;
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.4s ease;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #75b6fc;
+    transition: width 0.4s ease;
+}
+
+.nav-links a:hover {
+    color: #75b6fc;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.logo img{
+    width: 20%;
 }
 
 main {
     padding: 0 0 20px 0 ;
 }
 
+.product-section {
+    text-align: center;
+    padding: 20px;
+}
 
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
-    /* padding: 20px; */
+    margin: 20px 50px;
 }
 
 .product-grid .product {
-    /* background-color: #f2f2f2; */
-    /* padding: 60px 10px; */
-    margin: 0 50px;
     text-align: center;
+    transition: transform 0.3s ease;
 }
 
-/* footer {
-    background-color: #0056b3;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-} */
-
-.footer-section {
-    position: relative;
-    background: url('../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
-    color: #fff;
-    font-family: Arial, sans-serif;
+.product:hover {
+    transform: translateY(-5px);
 }
 
-.footer-overlay {
-    background-color: rgba(148, 163, 248, 0.8); /* Warna ungu transparan */
-    padding: 40px 60px;
+.product a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 auto;
-    color: black; /* sesuai gambar */
+.product img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
 }
 
-.footer-left {
-    width: 60%;
+.product img:hover {
+    opacity: 0.8;
 }
 
-.footer-left .footer-logo {
-    max-width: 200px;
-    /* margin-bottom: 15px; */
-    margin: 0;
-    height: 100%;
+.hidden-product {
+    display: none;
 }
-
-.footer-left p {
-    font-size: 14px;
-    line-height: 1.6;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-}
-
-.footer-right {
-    width: 35%;
-}
-
-.footer-right h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 10px;
-}
-
-.footer-right p {
-    color: black;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.footer-bottom {
-    background-color: #2050a0; /* biru */
-    text-align: center;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-
-.logo img{
-    width: 20%;
-    /* height: 10%; */
-}
-
+    
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -158,7 +135,7 @@ main {
 }
 
 .image-container img:first-child {
-  opacity: 1;
+    opacity: 1;
 }
 
 .image-container .dot-container {
@@ -189,7 +166,6 @@ main {
 
 .slider{
     width: 100%;
-    /* border: 1px solid red; */
     height: var(--height); 
     overflow: hidden;
     mask-image: linear-gradient(
@@ -261,6 +237,69 @@ button:hover {
     border: 1px solid #fff;
 }
 
+.footer-section {
+    position: relative;
+    background: url('../../../images/pabrikPlastikHB.jpg') center/cover no-repeat;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.footer-overlay {
+    background-color: rgba(148, 163, 248, 0.8); 
+    padding: 60px 60px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: black; 
+}
+
+.footer-left {
+    width: 60%;
+}
+
+.footer-left .footer-logo {
+    max-width: 200px;
+    margin: 20px 0;
+    height: 100%;
+}
+
+.footer-left p {
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: bold;
+    margin: 0;
+}
+
+.footer-right {
+    width: 35%;
+}
+
+.footer-right h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.footer-right p {
+    color: black;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.footer-bottom {
+    background-color: #0056b3;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 @keyframes carousel {
     0% { transform: translateX(0); }
     100% { transform: translateX(-75%); }
@@ -274,8 +313,13 @@ button:hover {
     }
 }
 
-.product img{
-    width: 90%;
-    height: 90%;
-    border: 1px solid black;
+@keyframes fadeIn {
+    0% {
+    opacity: 0;
+    transform: translateY(20px);
+    }
+    100% {
+    opacity: 1;
+    transform: translateY(0);
+    }
 }
